@@ -1,14 +1,15 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CsvToAvroApp")]
+[assembly: AssemblyTitle("CsvToAvro.Utility")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CsvToAvroApp")]
+[assembly: AssemblyProduct("CsvToAvro.Utility")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("231a9f61-5b99-4d03-81e0-d19571efb558")]
+[assembly: Guid("6a59faac-b146-4b6b-9a91-02eb6e98f3b9")]
 
 // Version information for an assembly consists of the following four values:
 //
