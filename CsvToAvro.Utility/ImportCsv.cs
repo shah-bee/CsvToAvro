@@ -9,7 +9,7 @@ using Microsoft.VisualBasic.FileIO;
 
 namespace CsvToAvro.Utility
 {
-    public class ReadCsvFile
+    public class ImportCsv
     {
         public IEnumerable<object> ImportAllFiles(string path, string fileType)
         {
@@ -22,13 +22,17 @@ namespace CsvToAvro.Utility
             }
         }
 
-
-        public DataTable GetDataTableFromCSVFile(string csv_file_path)
+        /// <summary>
+        /// Generates a consolidated datatable for the corresponding fileType, for example claim,policy,settlement etc.,
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public DataTable GetDataTableFromCsvFile(string fileName)
         {
             var csvData = new DataTable();
             try
             {
-                using (var csvReader = new TextFieldParser(csv_file_path))
+                using (var csvReader = new TextFieldParser(fileName))
                 {
                     csvReader.SetDelimiters("|");
                     csvReader.HasFieldsEnclosedInQuotes = true;
@@ -39,7 +43,7 @@ namespace CsvToAvro.Utility
                     {
                         var datcolumn = new DataColumn(column);
                         csvData.Columns.Add(datcolumn);
-                    } //end foreach
+                    }
                     //now on to the data
                     while (!csvReader.EndOfData)
                     {
@@ -52,8 +56,8 @@ namespace CsvToAvro.Utility
                         //} //end for
                         //add the DataRow
                         csvData.Rows.Add(fieldData);
-                    } //end while
-                } //end using
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -70,41 +74,45 @@ namespace CsvToAvro.Utility
         {
             var objList = new List<object>();
 
-            foreach (var file in Directory.GetFiles(path, fileName))
+            var dataTables = Directory.GetFiles(path, fileName).Select(GetDataTableFromCsvFile).ToList();
+
+            string primaryKey = string.Empty;
+
+            switch (fileType.ToLower())
             {
-                var objType = Utilities.GetType(fileType);
-                if (objType != null)
+                case "claim":
+                    primaryKey = "KeyInternSchadenummer";
+                    break;
+                case "policy":
+                    primaryKey = "KeyPolisId";
+                    break;
+            }
+
+            var consolidatedDataTable = dataTables.MergeAll(primaryKey);
+
+            var objType = Utilities.GetType(fileType);
+
+            if (objType != null)
+            {
+                //Get the properties for the class object type
+                PropertyInfo[] properties = objType.GetProperties();
+
+                foreach (DataRow dr in consolidatedDataTable.Rows)
                 {
-                    //Get the properties for the class object type
-                    PropertyInfo[] _filefields;
-                    _filefields = objType.GetProperties();
-                    //Create a list to store the data objects
+                    var tmpObj = Activator.CreateInstance(objType);
 
-                    //Get the data from the CSV file and populate the object listDataTable 
-                    var tmpTable = GetDataTableFromCSVFile(file);
-                    //the method we talked about at the beginning
-                    foreach (DataRow dr in tmpTable.Rows)
+                    foreach (var property in properties)
                     {
-                        var tmpObj = Activator.CreateInstance(objType);
-                        foreach (var pinfo in _filefields)
+                        //check to see if the table has a column with the specified field name
+                        if (dr.Table.Columns.Contains(property.Name))
                         {
-                            //check to see if the table has a column with the specified field name
-                            if (dr.Table.Columns.Contains(pinfo.Name))
-                            {
-                                //set the value of the object's property
-                                tmpObj.SetPropertyValue(pinfo.Name, dr[pinfo.Name]);
-                                // pinfo.SetValue(tmpObj, UtilitIES.ChangeType(dr[pinfo.Name], pinfo.PropertyType), null);
-                            } //end if
-                        } //end foreach
-                        objList.Add(tmpObj);
-                    } //end foreach
-
-
-                    //Dispose of the object list since the data has been committed to the database
-                    // objList = null;
-                } //end if(!objType.Equals(null))
-            } //end foreach
-
+                            //set the value of the object's property
+                            tmpObj.SetPropertyValue(property.Name, dr[property.Name]);
+                        }
+                    }
+                    objList.Add(tmpObj);
+                }
+            }
             return objList;
         }
     }

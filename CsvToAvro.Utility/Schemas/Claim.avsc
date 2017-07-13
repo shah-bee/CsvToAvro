@@ -198,6 +198,172 @@
     {
       "name": "XCSClaimCode",
       "type": "string"
+    },
+    {
+      "name": "Claimant",
+      "type": {
+        "type": "record",
+        "name": "Claimant",
+        "fields": [
+          {
+            "name": "ClaimantAddressArea",
+            "type": "string"
+          },
+          {
+            "name": "ClaimantAddressCity",
+            "type": "string"
+          },
+          {
+            "name": "ClaimantAddressStreet",
+            "type": "string"
+          },
+          {
+            "name": "ClaimantCode",
+            "type": "string"
+          },
+          {
+            "name": "ClaimantName",
+            "type": "string"
+          },
+          {
+            "name": "ClaimantPostCode",
+            "type": "string"
+          }
+
+        ]
+      }
+    },
+    {
+      "name": "Policy",
+      "type": {
+        "type": "record",
+        "name": "Policy",
+        "fields": [
+          {
+            "name": "PolicyCode",
+            "type": "string"
+          },
+          {
+            "name": "PolicyReference",
+            "type": "string"
+          },
+          {
+            "name": "SectionCode",
+            "type": "string"
+          },
+          {
+            "name": "SectionReference",
+            "type": "string"
+          },
+          {
+            "name": "Section",
+            "type": {
+              "type": "record",
+              "name": "Section",
+              "fields": [
+                {
+                  "name": "KeyIdPolis",
+                  "type": "string"
+                },
+                {
+                  "name": "KeyDekkingsNummer",
+                  "type": "string"
+                },
+                {
+                  "name": "Transaction",
+                  "type": {
+                    "type": "record",
+                    "name": "Transaction",
+                    "fields": [
+                      {
+                        "name": "KeyIdPolis",
+                        "type": "string"
+                      },
+                      {
+                        "name": "KeyDekkingsNummer",
+                        "type": "string"
+                      },
+                      {
+                        "name": "KeySchadeBoekingsNummer",
+                        "type": "string"
+                      },
+                      {
+                        "name": "Payee",
+                        "type": "string"
+                      },
+                      {
+                        "name": "RateOfExchange",
+                        "type": "string"
+                      },
+                      {
+                        "name": "TransactionAuthorisationDate",
+                        "type": "long"
+                      },
+                      {
+                        "name": "TransactionCurrencyCode",
+                        "type": "string"
+                      },
+                      {
+                        "name": "TransactionDate",
+                        "type": "long"
+                      },
+                      {
+                        "name": "TransactionReference",
+                        "type": "string"
+                      },
+                      {
+                        "name": "TransactionSequenceNumber",
+                        "type": "string"
+                      },
+                      {
+                        "name": "TransactionTypeCode",
+                        "type": "string"
+                      },
+                      {
+                        "name": "TransactionTypeDescription",
+                        "type": "string"
+                      },
+                      {
+                        "name": "TransactionComponent",
+                        "type": {
+                          "type": "record",
+                          "name": "TransactionComponent",
+                          "fields": [
+                            {
+                              "name": "KeyIdPolis",
+                              "type": "string"
+                            },
+                            {
+                              "name": "KeyDekkingsNummer",
+                              "type": "string"
+                            },
+                            {
+                              "name": "KeySchadeBoekingsNummer",
+                              "type": "string"
+                            },
+                            {
+                              "name": "TransactionAmount",
+                              "type": "string"
+                            },
+                            {
+                              "name": "TransactionComponentTypeCode",
+                              "type": "string"
+                            },
+                            {
+                              "name": "TransactionComponentTypeDescription",
+                              "type": "long"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
     }
   ]
 }

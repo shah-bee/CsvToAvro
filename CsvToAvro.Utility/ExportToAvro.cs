@@ -2,29 +2,30 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CsvToAvro.Utility.Models;
 using Microsoft.Hadoop.Avro.Container;
 using Microsoft.Practices.EnterpriseLibrary.Common.Utility;
 
 namespace CsvToAvro.Utility
 {
-    public class ConvertToAvro
+    public class ExportToAvro
     {
-
-        public ConvertToAvro(string exportLocation, IEnumerable<object> values, string fileType)
+        /// <summary>
+        /// </summary>
+        /// <param name="exportLocation"></param>
+        /// <param name="values"></param>
+        /// <param name="fileType"></param>
+        public ExportToAvro(string exportLocation, IEnumerable<object> values, string fileType)
         {
             if (exportLocation == null) throw new ArgumentNullException(nameof(exportLocation));
 
-            IEnumerable<Claim> result = values.Cast<Claim>();
+            var result = values.Cast<Claim.Claim>();
 
             using (var buffer = new MemoryStream())
             {
                 //Data is compressed using the Deflate codec.
-                using (var w = AvroContainer.CreateWriter<Claim>(buffer, Codec.Deflate))
+                using (var w = AvroContainer.CreateWriter<Claim.Claim>(buffer, Codec.Deflate))
                 {
-                    using (var writer = new SequentialWriter<Claim>(w, 24))
+                    using (var writer = new SequentialWriter<Claim.Claim>(w, 24))
                     {
                         // Serialize the data to stream by using the sequential writer
                         result.ForEach(writer.Write);
@@ -40,17 +41,22 @@ namespace CsvToAvro.Utility
             }
         }
 
-
+        /// <summary>
+        /// </summary>
+        /// <param name="InputStream"></param>
+        /// <param name="exportLocation"></param>
+        /// <param name="fileType"></param>
+        /// <returns></returns>
         //Saving memory stream to a new file with the given path
-        private bool WriteFile(MemoryStream InputStream, string path, string fileType)
+        private bool WriteFile(MemoryStream InputStream, string exportLocation, string fileType)
         {
-            path = path + "\\" + fileType + ".avro";
+            exportLocation = exportLocation + "\\" + fileType + ".avro";
 
-            if (!File.Exists(path))
+            if (!File.Exists(exportLocation))
             {
                 try
                 {
-                    using (FileStream fs = File.Create(path))
+                    using (var fs = File.Create(exportLocation))
                     {
                         InputStream.Seek(0, SeekOrigin.Begin);
                         InputStream.CopyTo(fs);
@@ -59,17 +65,15 @@ namespace CsvToAvro.Utility
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("The following exception was thrown during creation and writing to the file \"{0}\"", path);
+                    Console.WriteLine(
+                        "The following exception was thrown during creation and writing to the file \"{0}\"",
+                        exportLocation);
                     Console.WriteLine(e.Message);
                     return false;
                 }
             }
-            else
-            {
-                Console.WriteLine("Can not create file \"{0}\". File already exists", path);
-                return false;
-
-            }
+            Console.WriteLine("Can not create file \"{0}\". File already exists", exportLocation);
+            return false;
         }
     }
 }

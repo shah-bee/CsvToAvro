@@ -3,28 +3,25 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using CsvToAvro.Utility;
 using CsvToAvroApp.Properties;
-using NLog;
 
 namespace CsvToAvroApp
 {
     public partial class CsvToAvroForm : Form
     {
-
+        private IEnumerable<object> result;
         public CsvToAvroForm()
         {
             InitializeComponent();
             fileTypes.SelectedIndex = 0;
             fileTypes.DropDownStyle = ComboBoxStyle.DropDownList;
-
         }
-
 
         private void importBtn_Click(object sender, EventArgs e)
         {
             ImportlocationDialog.ShowDialog();
             importLocation.Text = ImportlocationDialog.SelectedPath;
 
-            var csvFile = new ReadCsvFile();
+            var csvFile = new ImportCsv();
             result = csvFile.ImportAllFiles(importLocation.Text, fileTypes.SelectedItem.ToString());
         }
 
@@ -46,7 +43,7 @@ namespace CsvToAvroApp
 
         private void ConvertCsvToAvro_Click(object sender, EventArgs e)
         {
-            var result1 = new ConvertToAvro(exportLocation.Text, result, fileTypes.SelectedItem.ToString());
+            var result1 = new ExportToAvro(exportLocation.Text, result, fileTypes.SelectedItem.ToString());
 
         }
     }
