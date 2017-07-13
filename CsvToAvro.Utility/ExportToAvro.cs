@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CsvToAvro.Utility.Models;
 using Microsoft.Hadoop.Avro.Container;
 using Microsoft.Practices.EnterpriseLibrary.Common.Utility;
 
@@ -18,14 +19,14 @@ namespace CsvToAvro.Utility
         {
             if (exportLocation == null) throw new ArgumentNullException(nameof(exportLocation));
 
-            var result = values.Cast<Claim.Claim>();
+            var result = values.Cast<Claim>();
 
             using (var buffer = new MemoryStream())
             {
                 //Data is compressed using the Deflate codec.
-                using (var w = AvroContainer.CreateWriter<Claim.Claim>(buffer, Codec.Deflate))
+                using (var w = AvroContainer.CreateWriter<Claim>(buffer, Codec.Deflate))
                 {
-                    using (var writer = new SequentialWriter<Claim.Claim>(w, 24))
+                    using (var writer = new SequentialWriter<Claim>(w, 24))
                     {
                         // Serialize the data to stream by using the sequential writer
                         result.ForEach(writer.Write);
