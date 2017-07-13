@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using CsvToAvro.Utility.Helper;
 
 namespace CsvToAvro.Utility.ExtensionMethods
 {
@@ -18,17 +19,12 @@ namespace CsvToAvro.Utility.ExtensionMethods
             {
                 try
                 {
-                    pi.SetValue
-                        (
-                            obj,
-                            Convert.ChangeType(propertyValue, pi.PropertyType),
-                            null
-                        );
+                    PropertyMapHelper.ParsePrimitive(pi, obj, propertyValue);
                 }
                 //TODO: Log exception and continue execution
                 catch (Exception ex)
                 {
-                    
+
                 }
             }
         }

@@ -10,6 +10,7 @@ namespace CsvToAvro.Utility
 {
     public class ExportToAvro
     {
+        public static bool IsImported = false;
         /// <summary>
         /// </summary>
         /// <param name="exportLocation"></param>
@@ -38,6 +39,10 @@ namespace CsvToAvro.Utility
                 if (!WriteFile(buffer, exportLocation, fileType))
                 {
                     Console.WriteLine("Error during file operation. Quitting method");
+                }
+                else
+                {
+                    IsImported = true;
                 }
             }
         }

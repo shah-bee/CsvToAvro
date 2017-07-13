@@ -11,12 +11,22 @@ namespace CsvToAvro.Utility
 {
     public class ImportCsv
     {
-        public IEnumerable<object> ImportAllFiles(string path, string fileType)
+        private DataTable importedData;
+        private List<object> objectList;
+        private readonly string importDirectoryPath;
+        private readonly string fileType;
+        public ImportCsv(string directoryPath, string file)
+        {
+            importDirectoryPath = directoryPath;
+            fileType = file;
+        }
+
+        public IEnumerable<object> ImportAllFiles()
         {
             switch (fileType.ToLowerInvariant())
             {
                 case "claim":
-                    return FillObjectWithData(path, "EDF " + fileType + "*.csv", fileType);
+                    return FillObjectWithData("EDF " + fileType + "*.csv");
                 default:
                     return Enumerable.Empty<object>();
             }
@@ -27,7 +37,7 @@ namespace CsvToAvro.Utility
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public DataTable GetDataTableFromCsvFile(string fileName)
+        private DataTable GetDataTableFromCsvFile(string fileName)
         {
             var csvData = new DataTable();
             try
@@ -70,11 +80,11 @@ namespace CsvToAvro.Utility
             return csvData;
         }
 
-        private IEnumerable<object> FillObjectWithData(string path, string fileName, string fileType)
+        private IEnumerable<object> FillObjectWithData(string filePath)
         {
-            var objList = new List<object>();
+            objectList = new List<object>();
 
-            var dataTables = Directory.GetFiles(path, fileName).Select(GetDataTableFromCsvFile).ToList();
+            var dataTables = Directory.GetFiles(importDirectoryPath, filePath).Select(GetDataTableFromCsvFile).ToList();
 
             string primaryKey = string.Empty;
 
@@ -88,32 +98,64 @@ namespace CsvToAvro.Utility
                     break;
             }
 
-            var consolidatedDataTable = dataTables.MergeAll(primaryKey);
+            importedData = dataTables.MergeAll(primaryKey);
 
-            var objType = Utilities.GetType(fileType);
+            return SyncProperties(fileType);
+
+        }
+
+        private void MapRowToObject(DataRow row, string propertyName)
+        {
+            var objType = Utilities.GetType(propertyName);
 
             if (objType != null)
             {
                 //Get the properties for the class object type
                 PropertyInfo[] properties = objType.GetProperties();
 
-                foreach (DataRow dr in consolidatedDataTable.Rows)
-                {
-                    var tmpObj = Activator.CreateInstance(objType);
+                var tmpObj = Activator.CreateInstance(objType);
 
-                    foreach (var property in properties)
+                foreach (var prop in properties)
+                {
+                    PropertyInfo pi = objType.GetProperty(prop.Name);
+
+                    if (HandleAsPrimitive(pi.PropertyType))
                     {
-                        //check to see if the table has a column with the specified field name
-                        if (dr.Table.Columns.Contains(property.Name))
+                        if (row.Table.Columns.Contains(prop.Name))
                         {
                             //set the value of the object's property
-                            tmpObj.SetPropertyValue(property.Name, dr[property.Name]);
+                            tmpObj.SetPropertyValue(prop.Name, row[prop.Name]);
                         }
                     }
-                    objList.Add(tmpObj);
+                  ////  else if (pi.PropertyType.IsClass)
+                  //  {
+                  //      MapRowToObject(row, prop.Name);
+                  //  }
+                    //else if (pi.PropertyType.IsEnum)
+                    //{
+                    //    // TODO: Handle Enum values
+                    //}
+
                 }
+                objectList.Add(tmpObj);
             }
-            return objList;
+        }
+
+        private IEnumerable<object> SyncProperties(string propertyName)
+        {
+
+            foreach (DataRow dr in importedData.Rows)
+            {
+                MapRowToObject(dr, propertyName);
+            }
+
+            return objectList;
+        }
+
+        public static bool HandleAsPrimitive(Type type)
+        {
+            bool isNullable = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+            return isNullable || type.IsPrimitive || type.IsEnum || type == typeof(String) || type == typeof(Decimal) || type == typeof(DateTime);
         }
     }
 }

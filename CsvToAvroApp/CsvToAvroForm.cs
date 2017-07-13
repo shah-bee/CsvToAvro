@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using CsvToAvro.Utility;
 using CsvToAvroApp.Properties;
@@ -21,8 +22,12 @@ namespace CsvToAvroApp
             ImportlocationDialog.ShowDialog();
             importLocation.Text = ImportlocationDialog.SelectedPath;
 
-            var csvFile = new ImportCsv();
-            result = csvFile.ImportAllFiles(importLocation.Text, fileTypes.SelectedItem.ToString());
+            var csvFile = new ImportCsv(importLocation.Text, fileTypes.SelectedItem.ToString());
+            result = csvFile.ImportAllFiles();
+            if (result.Any())
+            {
+                MessageBox.Show("Data imported successfully!");
+            }
         }
 
         private void exportBtn_Click(object sender, EventArgs e)
@@ -43,7 +48,22 @@ namespace CsvToAvroApp
 
         private void ConvertCsvToAvro_Click(object sender, EventArgs e)
         {
+            if (importLocation.Text.Equals(string.Empty))
+            {
+                MessageBox.Show("Please select import location! ");
+                return;
+            }
+            if (exportLocation.Text.Equals(string.Empty))
+            {
+                MessageBox.Show("Please select export location! ");
+                return;
+            }
             var result1 = new ExportToAvro(exportLocation.Text, result, fileTypes.SelectedItem.ToString());
+            if (ExportToAvro.IsImported)
+            {
+                MessageBox.Show("Successfully converted to avro file at" + exportLocation.Text);
+                return;
+            }
 
         }
     }

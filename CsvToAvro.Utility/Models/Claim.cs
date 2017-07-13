@@ -10,7 +10,7 @@ namespace CsvToAvro.Utility.Models
     [DataContract(Namespace = "CsvToAvro.Claim")]
     public partial class Claim
     {
-        private const string JsonSchema = @"{""type"":""record"",""name"":""CsvToAvro.Claim.Claim"",""fields"":[{""name"":""KeyInternSchadenummer"",""type"":""string""},{""name"":""BackgroundNarrative"",""type"":""string""},{""name"":""CatastropheCode"",""type"":""string""},{""name"":""CatastropheDescription"",""type"":""string""},{""name"":""ClaimCode"",""type"":""string""},{""name"":""ClaimCountry"",""type"":""string""},{""name"":""ClaimDeniedIndicator"",""type"":""string""},{""name"":""ClaimDescription"",""type"":""string""},{""name"":""ClaimDiary"",""type"":""string""},{""name"":""ClaimEventCode"",""type"":""string""},{""name"":""ClaimEventDescription"",""type"":""string""},{""name"":""ClaimHandler"",""type"":""string""},{""name"":""ClaimHandlerCode"",""type"":""string""},{""name"":""ClaimInsured"",""type"":""string""},{""name"":""ClaimLastModified"",""type"":""string""},{""name"":""Indicator"",""type"":{""type"":""enum"",""name"":""CsvToAvro.Claim.ClaimLeadIndicator"",""symbols"":[""Y"",""N""]}},{""name"":""ClaimLocationState"",""type"":""string""},{""name"":""ClaimOpenDate"",""type"":""long""},{""name"":""ClaimReference"",""type"":""string""},{""name"":""ClaimReportDate"",""type"":""long""},{""name"":""ClaimStatus"",""type"":""string""},{""name"":""ClaimYearOfAccount"",""type"":""long""},{""name"":""CloseDate"",""type"":""long""},{""name"":""CoverageNarrative"",""type"":""string""},{""name"":""CoverholderWithClaimsAuthority"",""type"":""string""},{""name"":""DateOfDeclinature"",""type"":""long""},{""name"":""DateOfLoss"",""type"":""long""},{""name"":""GeographicalOriginOfTheClaim"",""type"":""string""},{""name"":""LineageReference"",""type"":""string""},{""name"":""LitigationCode"",""type"":""string""},{""name"":""LitigationDescription"",""type"":""string""},{""name"":""MaximumPotentialLoss"",""type"":""string""},{""name"":""MaximumPotentialLossCurrency"",""type"":""string""},{""name"":""MaximumPotentialLossPercentage"",""type"":""string""},{""name"":""OriginalCurrencyCode"",""type"":""string""},{""name"":""PreviousClaimReference"",""type"":""string""},{""name"":""PreviousSourceSystem"",""type"":""string""},{""name"":""PreviousSourceSystemDescription"",""type"":""string""},{""name"":""ReasonDeclined"",""type"":""string""},{""name"":""ReserveNarrative"",""type"":""string""},{""name"":""ServiceProviderReference"",""type"":""string""},{""name"":""SettlementCurrencyCode"",""type"":""string""},{""name"":""SubrogationSalvageIndicator"",""type"":""string""},{""name"":""TacticsNarrative"",""type"":""string""},{""name"":""TPAHandleIndicator"",""type"":""string""},{""name"":""TriageCode"",""type"":""string""},{""name"":""XCSClaimRef"",""type"":""string""},{""name"":""XCSClaimCode"",""type"":""string""},{""name"":""Claimant"",""type"":{""type"":""record"",""name"":""CsvToAvro.Claim.Claimant"",""fields"":[{""name"":""ClaimantAddressArea"",""type"":""string""},{""name"":""ClaimantAddressCity"",""type"":""string""},{""name"":""ClaimantAddressStreet"",""type"":""string""},{""name"":""ClaimantCode"",""type"":""string""},{""name"":""ClaimantName"",""type"":""string""},{""name"":""ClaimantPostCode"",""type"":""string""}]}},{""name"":""Policy"",""type"":{""type"":""record"",""name"":""CsvToAvro.Claim.Policy"",""fields"":[{""name"":""PolicyCode"",""type"":""string""},{""name"":""PolicyReference"",""type"":""string""},{""name"":""SectionCode"",""type"":""string""},{""name"":""SectionReference"",""type"":""string""},{""name"":""Section"",""type"":{""type"":""record"",""name"":""CsvToAvro.Claim.Section"",""fields"":[{""name"":""KeyIdPolis"",""type"":""string""},{""name"":""KeyDekkingsNummer"",""type"":""string""},{""name"":""Transaction"",""type"":{""type"":""record"",""name"":""CsvToAvro.Claim.Transaction"",""fields"":[{""name"":""KeyIdPolis"",""type"":""string""},{""name"":""KeyDekkingsNummer"",""type"":""string""},{""name"":""KeySchadeBoekingsNummer"",""type"":""string""},{""name"":""Payee"",""type"":""string""},{""name"":""RateOfExchange"",""type"":""string""},{""name"":""TransactionAuthorisationDate"",""type"":""long""},{""name"":""TransactionCurrencyCode"",""type"":""string""},{""name"":""TransactionDate"",""type"":""long""},{""name"":""TransactionReference"",""type"":""string""},{""name"":""TransactionSequenceNumber"",""type"":""string""},{""name"":""TransactionTypeCode"",""type"":""string""},{""name"":""TransactionTypeDescription"",""type"":""string""},{""name"":""TransactionComponent"",""type"":{""type"":""record"",""name"":""CsvToAvro.Claim.TransactionComponent"",""fields"":[{""name"":""KeyIdPolis"",""type"":""string""},{""name"":""KeyDekkingsNummer"",""type"":""string""},{""name"":""KeySchadeBoekingsNummer"",""type"":""string""},{""name"":""TransactionAmount"",""type"":""string""},{""name"":""TransactionComponentTypeCode"",""type"":""string""},{""name"":""TransactionComponentTypeDescription"",""type"":""long""}]}}]}}]}}]}}]}";
+        private const string JsonSchema = @"{""type"":""record"",""name"":""CsvToAvro.Claim.Claim"",""fields"":[{""name"":""KeyInternSchadenummer"",""type"":""string""},{""name"":""BackgroundNarrative"",""type"":""string""},{""name"":""CatastropheCode"",""type"":""string""},{""name"":""CatastropheDescription"",""type"":""string""},{""name"":""ClaimCode"",""type"":""string""},{""name"":""ClaimCountry"",""type"":""string""},{""name"":""ClaimDeniedIndicator"",""type"":""string""},{""name"":""ClaimDescription"",""type"":""string""},{""name"":""ClaimDiary"",""type"":""string""},{""name"":""ClaimEventCode"",""type"":""string""},{""name"":""ClaimEventDescription"",""type"":""string""},{""name"":""ClaimHandler"",""type"":""string""},{""name"":""ClaimHandlerCode"",""type"":""string""},{""name"":""ClaimInsured"",""type"":""string""},{""name"":""ClaimLastModified"",""type"":""string""},{""name"":""ClaimLeadIndicator"",""type"":{""type"":""enum"",""name"":""CsvToAvro.Claim.ClaimLeadIndicator"",""symbols"":[""Y"",""N""]}},{""name"":""ClaimLocationState"",""type"":""string""},{""name"":""ClaimOpenDate"",""type"":""long""},{""name"":""ClaimReference"",""type"":""string""},{""name"":""ClaimReportDate"",""type"":""long""},{""name"":""ClaimStatus"",""type"":""string""},{""name"":""ClaimYearOfAccount"",""type"":""long""},{""name"":""CloseDate"",""type"":""long""},{""name"":""CoverageNarrative"",""type"":""string""},{""name"":""CoverholderWithClaimsAuthority"",""type"":""string""},{""name"":""DateOfDeclinature"",""type"":""long""},{""name"":""DateOfLoss"",""type"":""long""},{""name"":""GeographicalOriginOfTheClaim"",""type"":""string""},{""name"":""LineageReference"",""type"":""string""},{""name"":""LitigationCode"",""type"":""string""},{""name"":""LitigationDescription"",""type"":""string""},{""name"":""MaximumPotentialLoss"",""type"":""string""},{""name"":""MaximumPotentialLossCurrency"",""type"":""string""},{""name"":""MaximumPotentialLossPercentage"",""type"":""string""},{""name"":""OriginalCurrencyCode"",""type"":""string""},{""name"":""PreviousClaimReference"",""type"":""string""},{""name"":""PreviousSourceSystem"",""type"":""string""},{""name"":""PreviousSourceSystemDescription"",""type"":""string""},{""name"":""ReasonDeclined"",""type"":""string""},{""name"":""ReserveNarrative"",""type"":""string""},{""name"":""ServiceProviderReference"",""type"":""string""},{""name"":""SettlementCurrencyCode"",""type"":""string""},{""name"":""SubrogationSalvageIndicator"",""type"":""string""},{""name"":""TacticsNarrative"",""type"":""string""},{""name"":""TPAHandleIndicator"",""type"":""string""},{""name"":""TriageCode"",""type"":""string""},{""name"":""XCSClaimRef"",""type"":""string""},{""name"":""XCSClaimCode"",""type"":""string""},{""name"":""Claimant"",""type"":{""type"":""record"",""name"":""CsvToAvro.Claim.Claimant"",""fields"":[{""name"":""ClaimantAddressArea"",""type"":""string""},{""name"":""ClaimantAddressCity"",""type"":""string""},{""name"":""ClaimantAddressStreet"",""type"":""string""},{""name"":""ClaimantCode"",""type"":""string""},{""name"":""ClaimantName"",""type"":""string""},{""name"":""ClaimantPostCode"",""type"":""string""}]}},{""name"":""Policy"",""type"":{""type"":""record"",""name"":""CsvToAvro.Claim.Policy"",""fields"":[{""name"":""PolicyCode"",""type"":""string""},{""name"":""PolicyReference"",""type"":""string""},{""name"":""SectionCode"",""type"":""string""},{""name"":""SectionReference"",""type"":""string""},{""name"":""Section"",""type"":{""type"":""record"",""name"":""CsvToAvro.Claim.Section"",""fields"":[{""name"":""KeyIdPolis"",""type"":""string""},{""name"":""KeyDekkingsNummer"",""type"":""string""},{""name"":""Transaction"",""type"":{""type"":""record"",""name"":""CsvToAvro.Claim.Transaction"",""fields"":[{""name"":""KeyIdPolis"",""type"":""string""},{""name"":""KeyDekkingsNummer"",""type"":""string""},{""name"":""KeySchadeBoekingsNummer"",""type"":""string""},{""name"":""Payee"",""type"":""string""},{""name"":""RateOfExchange"",""type"":""string""},{""name"":""TransactionAuthorisationDate"",""type"":""long""},{""name"":""TransactionCurrencyCode"",""type"":""string""},{""name"":""TransactionDate"",""type"":""long""},{""name"":""TransactionReference"",""type"":""string""},{""name"":""TransactionSequenceNumber"",""type"":""string""},{""name"":""TransactionTypeCode"",""type"":""string""},{""name"":""TransactionTypeDescription"",""type"":""string""},{""name"":""TransactionComponent"",""type"":{""type"":""record"",""name"":""CsvToAvro.Claim.TransactionComponent"",""fields"":[{""name"":""KeyIdPolis"",""type"":""string""},{""name"":""KeyDekkingsNummer"",""type"":""string""},{""name"":""KeySchadeBoekingsNummer"",""type"":""string""},{""name"":""TransactionAmount"",""type"":""string""},{""name"":""TransactionComponentTypeCode"",""type"":""string""},{""name"":""TransactionComponentTypeDescription"",""type"":""long""}]}}]}}]}}]}}]}";
 
         /// <summary>
         /// Gets the schema.
@@ -114,10 +114,10 @@ namespace CsvToAvro.Utility.Models
         public string ClaimLastModified { get; set; }
               
         /// <summary>
-        /// Gets or sets the Indicator field.
+        /// Gets or sets the ClaimLeadIndicator field.
         /// </summary>
         [DataMember]
-        public ClaimLeadIndicator Indicator { get; set; }
+        public ClaimLeadIndicator ClaimLeadIndicator { get; set; }
               
         /// <summary>
         /// Gets or sets the ClaimLocationState field.
@@ -314,14 +314,14 @@ namespace CsvToAvro.Utility.Models
         /// <summary>
         /// Gets or sets the Claimant field.
         /// </summary>
-        [DataMember]
-        public Claimant Claimant { get; set; }
+        //[DataMember]
+        //public Claimant Claimant { get; set; }
               
         /// <summary>
         /// Gets or sets the Policy field.
         /// </summary>
-        [DataMember]
-        public Policy Policy { get; set; }
+        //[DataMember]
+        //public Policy Policy { get; set; }
                 
         /// <summary>
         /// Initializes a new instance of the <see cref="Claim"/> class.
@@ -348,7 +348,7 @@ namespace CsvToAvro.Utility.Models
         /// <param name="claimHandlerCode">The claimHandlerCode.</param>
         /// <param name="claimInsured">The claimInsured.</param>
         /// <param name="claimLastModified">The claimLastModified.</param>
-        /// <param name="indicator">The indicator.</param>
+        /// <param name="claimLeadIndicator">The claimLeadIndicator.</param>
         /// <param name="claimLocationState">The claimLocationState.</param>
         /// <param name="claimOpenDate">The claimOpenDate.</param>
         /// <param name="claimReference">The claimReference.</param>
@@ -383,7 +383,7 @@ namespace CsvToAvro.Utility.Models
         /// <param name="xCSClaimCode">The xCSClaimCode.</param>
         /// <param name="claimant">The claimant.</param>
         /// <param name="policy">The policy.</param>
-        public Claim(string keyInternSchadenummer, string backgroundNarrative, string catastropheCode, string catastropheDescription, string claimCode, string claimCountry, string claimDeniedIndicator, string claimDescription, string claimDiary, string claimEventCode, string claimEventDescription, string claimHandler, string claimHandlerCode, string claimInsured, string claimLastModified, ClaimLeadIndicator indicator, string claimLocationState, long claimOpenDate, string claimReference, long claimReportDate, string claimStatus, long claimYearOfAccount, long closeDate, string coverageNarrative, string coverholderWithClaimsAuthority, long dateOfDeclinature, long dateOfLoss, string geographicalOriginOfTheClaim, string lineageReference, string litigationCode, string litigationDescription, string maximumPotentialLoss, string maximumPotentialLossCurrency, string maximumPotentialLossPercentage, string originalCurrencyCode, string previousClaimReference, string previousSourceSystem, string previousSourceSystemDescription, string reasonDeclined, string reserveNarrative, string serviceProviderReference, string settlementCurrencyCode, string subrogationSalvageIndicator, string tacticsNarrative, string tPAHandleIndicator, string triageCode, string xCSClaimRef, string xCSClaimCode, Claimant claimant, Policy policy)
+        public Claim(string keyInternSchadenummer, string backgroundNarrative, string catastropheCode, string catastropheDescription, string claimCode, string claimCountry, string claimDeniedIndicator, string claimDescription, string claimDiary, string claimEventCode, string claimEventDescription, string claimHandler, string claimHandlerCode, string claimInsured, string claimLastModified, ClaimLeadIndicator claimLeadIndicator, string claimLocationState, long claimOpenDate, string claimReference, long claimReportDate, string claimStatus, long claimYearOfAccount, long closeDate, string coverageNarrative, string coverholderWithClaimsAuthority, long dateOfDeclinature, long dateOfLoss, string geographicalOriginOfTheClaim, string lineageReference, string litigationCode, string litigationDescription, string maximumPotentialLoss, string maximumPotentialLossCurrency, string maximumPotentialLossPercentage, string originalCurrencyCode, string previousClaimReference, string previousSourceSystem, string previousSourceSystemDescription, string reasonDeclined, string reserveNarrative, string serviceProviderReference, string settlementCurrencyCode, string subrogationSalvageIndicator, string tacticsNarrative, string tPAHandleIndicator, string triageCode, string xCSClaimRef, string xCSClaimCode, Claimant claimant, Policy policy)
         {
             this.KeyInternSchadenummer = keyInternSchadenummer;
             this.BackgroundNarrative = backgroundNarrative;
@@ -400,7 +400,7 @@ namespace CsvToAvro.Utility.Models
             this.ClaimHandlerCode = claimHandlerCode;
             this.ClaimInsured = claimInsured;
             this.ClaimLastModified = claimLastModified;
-            this.Indicator = indicator;
+            this.ClaimLeadIndicator = claimLeadIndicator;
             this.ClaimLocationState = claimLocationState;
             this.ClaimOpenDate = claimOpenDate;
             this.ClaimReference = claimReference;
@@ -433,8 +433,8 @@ namespace CsvToAvro.Utility.Models
             this.TriageCode = triageCode;
             this.XCSClaimRef = xCSClaimRef;
             this.XCSClaimCode = xCSClaimCode;
-            this.Claimant = claimant;
-            this.Policy = policy;
+           // this.Claimant = claimant;
+            //this.Policy = policy;
         }
     }
 }

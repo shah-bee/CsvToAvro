@@ -277,6 +277,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\PropertyMapper.cs" />
     <Compile Include="Models\Claim.cs" />
     <Compile Include="Models\Claimant.cs" />
     <Compile Include="Models\ClaimLeadIndicator.cs" />
