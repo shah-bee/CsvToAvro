@@ -3,35 +3,20 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 using CsvToAvro.Utility.Helper;
 using CsvToAvro.Utility.Models;
 using Microsoft.VisualBasic.FileIO;
 
-namespace CsvToAvro.Utility
+namespace CsvToAvro.Utility.Claim
 {
-    public class ImportCsv
+    class ClaimImporter :AbstractImporter
     {
-        private List<DataTable> importedData;
-        private List<object> objectList;
-        private readonly string importDirectoryPath;
-        private readonly string fileType;
-        public ImportCsv(string directoryPath, string file)
-        {
-            importDirectoryPath = directoryPath;
-            fileType = file;
-            importedData = new List<DataTable>();
-        }
 
-        public IEnumerable<object> ImportAllFiles()
+        public ClaimImporter()
         {
-            switch (fileType.ToLowerInvariant())
-            {
-                case "claim":
-                    return FillObjectWithData("EDF " + fileType + "*.csv");
-                default:
-                    return Enumerable.Empty<object>();
-            }
+            
         }
 
         private string DetermineTableName(string filePath)
@@ -378,5 +363,10 @@ namespace CsvToAvro.Utility
             return claimants;
         }
 
+
+        public override IEnumerable<object> Import()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

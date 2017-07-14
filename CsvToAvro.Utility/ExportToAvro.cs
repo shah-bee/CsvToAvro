@@ -16,7 +16,7 @@ namespace CsvToAvro.Utility
         /// <param name="exportLocation"></param>
         /// <param name="values"></param>
         /// <param name="fileType"></param>
-        public ExportToAvro(string exportLocation, IEnumerable<Claim> values, string fileType)
+        public ExportToAvro(string exportLocation, IEnumerable<Models.Claim> values, string fileType)
         {
             if (exportLocation == null) throw new ArgumentNullException(nameof(exportLocation));
 
@@ -24,9 +24,9 @@ namespace CsvToAvro.Utility
             using (var buffer = new MemoryStream())
             {
                 //Data is compressed using the Deflate codec.
-                using (var w = AvroContainer.CreateWriter<Claim>(buffer, Codec.Deflate))
+                using (var w = AvroContainer.CreateWriter<Models.Claim>(buffer, Codec.Deflate))
                 {
-                    using (var writer = new SequentialWriter<Claim>(w, 24))
+                    using (var writer = new SequentialWriter<Models.Claim>(w, 24))
                     {
                         // Serialize the data to stream by using the sequential writer
                         values.ForEach(writer.Write);
