@@ -16,11 +16,10 @@ namespace CsvToAvro.Utility
         /// <param name="exportLocation"></param>
         /// <param name="values"></param>
         /// <param name="fileType"></param>
-        public ExportToAvro(string exportLocation, IEnumerable<object> values, string fileType)
+        public ExportToAvro(string exportLocation, IEnumerable<Claim> values, string fileType)
         {
             if (exportLocation == null) throw new ArgumentNullException(nameof(exportLocation));
 
-            var result = values.Cast<Claim>();
 
             using (var buffer = new MemoryStream())
             {
@@ -30,7 +29,7 @@ namespace CsvToAvro.Utility
                     using (var writer = new SequentialWriter<Claim>(w, 24))
                     {
                         // Serialize the data to stream by using the sequential writer
-                        result.ForEach(writer.Write);
+                        values.ForEach(writer.Write);
                     }
                 }
 

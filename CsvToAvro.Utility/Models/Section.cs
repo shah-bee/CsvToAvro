@@ -39,7 +39,7 @@ namespace CsvToAvro.Utility.Models
         /// Gets or sets the Transaction field.
         /// </summary>
         [DataMember]
-        public Transaction Transaction { get; set; }
+        public Transaction[] Transaction { get; set; }
                 
         /// <summary>
         /// Initializes a new instance of the <see cref="Section"/> class.
@@ -54,7 +54,7 @@ namespace CsvToAvro.Utility.Models
         /// <param name="keyIdPolis">The keyIdPolis.</param>
         /// <param name="keyDekkingsNummer">The keyDekkingsNummer.</param>
         /// <param name="transaction">The transaction.</param>
-        public Section(string keyIdPolis, string keyDekkingsNummer, Transaction transaction)
+        public Section(string keyIdPolis, string keyDekkingsNummer, Transaction[] transaction)
         {
             this.KeyIdPolis = keyIdPolis;
             this.KeyDekkingsNummer = keyDekkingsNummer;

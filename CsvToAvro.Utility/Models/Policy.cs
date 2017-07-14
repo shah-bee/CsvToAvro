@@ -51,7 +51,7 @@ namespace CsvToAvro.Utility.Models
         /// Gets or sets the Section field.
         /// </summary>
         [DataMember]
-        public Section Section { get; set; }
+        public Section[] Section { get; set; }
                 
         /// <summary>
         /// Initializes a new instance of the <see cref="Policy"/> class.
@@ -68,7 +68,7 @@ namespace CsvToAvro.Utility.Models
         /// <param name="sectionCode">The sectionCode.</param>
         /// <param name="sectionReference">The sectionReference.</param>
         /// <param name="section">The section.</param>
-        public Policy(string policyCode, string policyReference, string sectionCode, string sectionReference, Section section)
+        public Policy(string policyCode, string policyReference, string sectionCode, string sectionReference, Section[] section)
         {
             this.PolicyCode = policyCode;
             this.PolicyReference = policyReference;

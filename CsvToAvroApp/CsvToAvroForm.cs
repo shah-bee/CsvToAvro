@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using CsvToAvro.Utility;
+using CsvToAvro.Utility.Models;
 using CsvToAvroApp.Properties;
 
 namespace CsvToAvroApp
@@ -58,7 +59,7 @@ namespace CsvToAvroApp
                 MessageBox.Show("Please select export location! ");
                 return;
             }
-            var result1 = new ExportToAvro(exportLocation.Text, result, fileTypes.SelectedItem.ToString());
+            var result1 = new ExportToAvro(exportLocation.Text, result.Cast<Claim>(), fileTypes.SelectedItem.ToString());
             if (ExportToAvro.IsImported)
             {
                 MessageBox.Show("Successfully converted to avro file at" + exportLocation.Text);

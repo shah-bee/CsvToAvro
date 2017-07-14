@@ -282,12 +282,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>claim.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Helper\ObjectSynchronizer.cs" />
-    <Compile Include="Helper\PropertyMapper.cs" />
+    <Compile Include="Helper\Constants.cs" />
     <Compile Include="Models\Claim.cs" />
     <Compile Include="Models\Claimant.cs" />
     <Compile Include="Models\ClaimLeadIndicator.cs" />
-    <Compile Include="ExtensionMethods\ObjectExtensions.cs" />
     <Compile Include="ExportToAvro.cs" />
     <Compile Include="ImportCsv.cs" />
     <Compile Include="Models\Policy.cs" />

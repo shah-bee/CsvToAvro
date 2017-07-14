@@ -4,7 +4,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using CsvToAvro.Utility.ExtensionMethods;
+using CsvToAvro.Utility.Helper;
 using CsvToAvro.Utility.Models;
 using Microsoft.VisualBasic.FileIO;
 
@@ -49,27 +49,27 @@ namespace CsvToAvro.Utility
         {
             if (filePath.ToLower().Contains("claimarrayclaimant"))
             {
-                return "claimant";
+                return Constants.ClaimClaimant;
             }
             else if (filePath.ToLower().Contains("claimarraypolicy"))
             {
-                return "claimpolicy";
+                return Constants.ClaimPolicy;
             }
             else if (filePath.ToLower().Contains("claimarraysection"))
             {
-                return "claimsection";
+                return Constants.ClaimSection;
             }
             else if (filePath.ToLower().Contains("claimarraytransactioncomponent"))
             {
-                return "claimtransactioncomponent";
+                return Constants.ClaimTransactionComponent;
             }
             else if (filePath.ToLower().Contains("claimarraytransaction"))
             {
-                return "claimtransaction";
+                return Constants.ClaimTransaction;
             }
             else
             {
-                return "claim";
+                return Constants.Claim;
             }
         }
 
@@ -139,7 +139,7 @@ namespace CsvToAvro.Utility
 
         private IEnumerable<Claim> FillClaimObjects()
         {
-            var claimTable = importedData.FirstOrDefault(o => o.TableName.Equals("claim"));
+            var claimTable = importedData.FirstOrDefault(o => o.TableName.Equals(Constants.Claim));
 
             var claims = new List<Claim>();
 
@@ -200,16 +200,7 @@ namespace CsvToAvro.Utility
                             TriageCode = row["TriageCode"].ToString(),
                             XCSClaimCode = row["XCSClaimCode"].ToString(),
                             XCSClaimRef = row["XCSClaimRef"].ToString(),
-                            Policy = new Policy
-                            {
-                                Section = new Section
-                                {
-                                    Transaction = new Transaction
-                                    {
-                                        TransactionComponent = new TransactionComponent()
-                                    }
-                                }
-                            },
+                            Policy = GetPolicyByClaimNumber(row["KeyInternSchadenummer"].ToString()),
                             Claimant = GetClaimantsByClaimNumber(row["KeyInternSchadenummer"].ToString()).ToArray()
 
                         };
@@ -228,10 +219,147 @@ namespace CsvToAvro.Utility
             return Enumerable.Empty<Claim>();
         }
 
+        private Policy GetPolicyByClaimNumber(string claimNumber)
+        {
+            var policyTable = importedData.FirstOrDefault(o => o.TableName.Equals(Constants.ClaimPolicy));
+
+            var policy = new Policy();
+            if (policyTable != null)
+                foreach (DataRow row in policyTable.Rows)
+                {
+                    try
+                    {
+                        if (claimNumber.Equals(row["KeyInternSchadenummer"]))
+                        {
+                            policy.Section = GetSectionByClaimNumber(claimNumber).ToArray();
+                            policy.PolicyCode = row["PolicyCode"].ToString();
+                            policy.PolicyReference = row["PolicyReference"].ToString();
+                            policy.SectionCode = row["SectionCode"].ToString();
+                            policy.SectionReference = row["SectionReference"].ToString();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //// TODO : Log exception
+                    }
+                }
+
+            return policy;
+        }
+
+        private IEnumerable<Section> GetSectionByClaimNumber(string claimNumber)
+        {
+            var sectionTable = importedData.FirstOrDefault(o => o.TableName.Equals(Constants.ClaimSection));
+
+            var sections = new List<Section>();
+
+            if (sectionTable != null)
+                foreach (DataRow row in sectionTable.Rows)
+                {
+                    try
+                    {
+                        if (claimNumber.Equals(row["KeyInternSchadenummer"]))
+                        {
+                            var section = new Section
+                            {
+                                KeyIdPolis = row["KeyIdPolis"].ToString(),
+                                KeyDekkingsNummer = row["KeyDekkingsNummer"].ToString(),
+                                Transaction = GetTransactionByClaimNumber(claimNumber),
+                            };
+
+                            sections.Add(section);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //// TODO : Log exception
+                    }
+                }
+
+            return sections;
+        }
+
+        private Transaction[] GetTransactionByClaimNumber(string claimNumber)
+        {
+            var transactionTable = importedData.FirstOrDefault(o => o.TableName.Equals(Constants.ClaimTransaction));
+
+            var transactions = new List<Transaction>();
+
+            if (transactionTable != null)
+                foreach (DataRow row in transactionTable.Rows)
+                {
+                    try
+                    {
+                        if (claimNumber.Equals(row["KeyInternSchadenummer"]))
+                        {
+                            var transaction = new Transaction
+                            {
+                                KeyIdPolis = row["KeyIdPolis"].ToString(),
+                                KeyDekkingsNummer = row["KeyDekkingsNummer"].ToString(),
+                                KeySchadeBoekingsNummer = row["KeySchadeBoekingsNummer"].ToString(),
+                                Payee = row["Payee"].ToString(),
+                                RateOfExchange = row["RateOfExchange"].ToString(),
+                                //TransactionAuthorisationDate =Convert.ToInt64(row["TransactionAuthorisationDate"]),
+                                TransactionCurrencyCode = row["TransactionCurrencyCode"].ToString(),
+                                //TransactionDate = row["TransactionDate"].ToString(),
+                                TransactionReference = row["TransactionReference"].ToString(),
+                                TransactionSequenceNumber = row["TransactionSequenceNumber"].ToString(),
+                                TransactionTypeCode = row["TransactionTypeCode"].ToString(),
+                                TransactionTypeDescription = row["TransactionTypeDescription"].ToString(),
+                                TransactionComponent = GetTransactionComponentsByClaimNumber(claimNumber)
+                            };
+
+                            transactions.Add(transaction);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //// TODO : Log exception
+                    }
+                }
+
+            return transactions.ToArray();
+        }
+
+        private TransactionComponent[] GetTransactionComponentsByClaimNumber(string claimNumber)
+        {
+            var transactionComponentTable = importedData.FirstOrDefault(o => o.TableName.Equals(Constants.ClaimTransactionComponent));
+
+            var transactionComponents = new List<TransactionComponent>();
+
+            if (transactionComponentTable != null)
+                foreach (DataRow row in transactionComponentTable.Rows)
+                {
+                    try
+                    {
+                        if (claimNumber.Equals(row["KeyInternSchadenummer"]))
+                        {
+                            var transactionComponent = new TransactionComponent
+                            {
+                                KeyIdPolis = row["KeyIdPolis"].ToString(),
+                                KeyDekkingsNummer = row["KeyDekkingsNummer"].ToString(),
+                                KeySchadeBoekingsNummer = row["KeySchadeBoekingsNummer"].ToString(),
+                                TransactionAmount = row["TransactionAmount"].ToString(),
+                                TransactionComponentTypeCode = row["TransactionComponentTypeCode"].ToString(),
+                                TransactionComponentTypeDescription = row["TransactionComponentTypeDescription"].ToString()
+
+                            };
+
+                            transactionComponents.Add(transactionComponent);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //// TODO : Log exception
+                    }
+                }
+
+            return transactionComponents.ToArray();
+        }
 
         private IEnumerable<Claimant> GetClaimantsByClaimNumber(string claimNumber)
         {
-            var claimantTable = importedData.FirstOrDefault(o => o.TableName.Equals("claimant"));
+            var claimantTable = importedData.FirstOrDefault(o => o.TableName.Equals(Constants.ClaimClaimant));
 
             var claimants = new List<Claimant>();
 
@@ -249,142 +377,6 @@ namespace CsvToAvro.Utility
                                    });
             return claimants;
         }
-
-        //private void MapRowToObject(DataRow row, object target, object value = null)
-        //{
-        //    if (target != null)
-        //    {
-        //        PropertyInfo[] properties = value?.GetType().GetProperties() ?? target.GetType().GetProperties();
-
-        //        foreach (var prop in properties)
-        //        {
-        //            PropertyInfo pi = value == null ? target.GetType().GetProperty(prop.Name) : value.GetType().GetProperty(prop.Name);
-
-        //            if (HandleAsPrimitive(pi.PropertyType))
-        //            {
-        //                if (row.Table.Columns.Contains(prop.Name))
-        //                {
-        //                    //set the value of the object's property
-        //                    if (value == null)
-        //                    {
-        //                        target.SetPropertyValue(prop.Name, row[prop.Name]);
-        //                    }
-        //                    else
-        //                    {
-        //                        value.SetPropertyValue(prop.Name, row[prop.Name]);
-        //                    }
-        //                    //.SetValue(target, value, null);
-        //                }
-        //            }
-        //            else if (pi.PropertyType.IsClass)
-        //            {
-        //                object outerPropertyValue = prop.PropertyType.GetConstructor(new Type[] { }).Invoke(new object[] { });
-
-        //                foreach (PropertyInfo info2 in prop.PropertyType.GetProperties())
-        //                {
-        //                    try
-        //                    {
-        //                        if (info2.CanWrite)
-        //                        {
-        //                            if (row.Table.Columns.Contains(info2.Name))
-        //                            {
-        //                                object innerPropertyValue = Convert.ChangeType(row[info2.Name], info2.PropertyType);
-        //                                info2.SetValue(outerPropertyValue, innerPropertyValue, null);
-        //                            }
-        //                        }
-        //                    }
-        //                    catch (Exception ex)
-        //                    {
-        //                    }
-        //                }
-        //                //MapRowToObject(row, target, outerPropertyValue);
-        //                prop.SetValue(target, outerPropertyValue, null);
-        //                //MapRowToObject(row, prop.Name);
-        //            }
-        //            //else if (pi.PropertyType.IsEnum)
-        //            //{
-        //            //    // TODO: Handle Enum values
-        //            //}
-        //        }
-        //    }
-        //}
-
-        //private IEnumerable<object> SyncProperties(string propertyName)
-        //{
-        //    var objType = Utilities.GetType(propertyName);
-
-        //    if (objType != null)
-        //    {
-        //        foreach (DataRow dr in importedData.Rows)
-        //        {
-        //            var targetObject = Activator.CreateInstance(objType);
-        //            MapRowToObject(dr, targetObject);
-        //            objectList.Add(targetObject);
-        //        }
-        //    }
-
-        //    return objectList;
-        //}
-
-        //public static bool HandleAsPrimitive(Type type)
-        //{
-        //    bool isNullable = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
-        //    return isNullable || type.IsPrimitive || type.IsEnum || type == typeof(String) || type == typeof(Decimal) || type == typeof(DateTime);
-        //}
-
-        //private static bool SyncPropery(string propertyName, object source, object target)
-        //{
-        //    //keyInfo.ThrowIfArgumentNull("keyInfo");
-        //    //source.ThrowIfArgumentNull("source");
-        //    //target.ThrowIfArgumentNull("target");
-
-        //    var sourceType = source.GetType();
-        //    var propertyInfo = sourceType.GetProperty(propertyName);
-        //    if (propertyInfo == null)
-        //        return false;
-        //    var propertyType = propertyInfo.PropertyType;
-        //    var sourceValue = propertyInfo.GetValue(source);
-        //    var targetValue = propertyInfo.GetValue(target);
-
-        //    if (sourceValue != null && sourceValue.Equals(targetValue))
-        //    {
-        //        return false;
-        //    }
-        //    else if (HandleAsPrimitive(propertyType))
-        //    {
-        //        propertyInfo.SetValue(target, sourceValue);
-        //    }
-        //    //else if (propertyType.IsArray && keyInfo.IsArrayElement)
-        //    //{
-        //    //    SyncArrayElement(keyInfo, propertyInfo, target, sourceValue as object[], targetValue as object[]);
-        //    //}
-        //    //else if (sourceValue == null || targetValue == null)
-        //    //{
-        //    //    propertyInfo.SetValue(target, sourceValue);
-        //    //}
-        //    //else if (IsGenericList(propertyType))
-        //    //{
-        //    //    SyncListElement(keyInfo, propertyInfo, target, sourceValue as IList, targetValue as IList);
-        //    //}
-        //    else if (propertyType.IsClass)
-        //    {
-        //        SyncObject(sourceType.GetProperties(), sourceValue, targetValue);
-        //    }
-        //    else
-        //    {
-        //        throw new Exception("not handled: " + propertyType.Name);
-        //    }
-
-        //    return true;
-        //}
-
-        //private static void SyncObject(IEnumerable<PropertyInfo> keyInfos, object source, object target)
-        //{
-        //    foreach (var keyInfo in keyInfos)
-        //    {
-        //        SyncPropery(keyInfo.Name, source, target);
-        //    }
-        //}
 
     }
 }

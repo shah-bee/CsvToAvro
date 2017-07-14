@@ -22,85 +22,85 @@ namespace CsvToAvro.Utility.Models
                 return JsonSchema;
             }
         }
-      
+
         /// <summary>
         /// Gets or sets the KeyIdPolis field.
         /// </summary>
         [DataMember]
         public string KeyIdPolis { get; set; }
-              
+
         /// <summary>
         /// Gets or sets the KeyDekkingsNummer field.
         /// </summary>
         [DataMember]
         public string KeyDekkingsNummer { get; set; }
-              
+
         /// <summary>
         /// Gets or sets the KeySchadeBoekingsNummer field.
         /// </summary>
         [DataMember]
         public string KeySchadeBoekingsNummer { get; set; }
-              
+
         /// <summary>
         /// Gets or sets the Payee field.
         /// </summary>
         [DataMember]
         public string Payee { get; set; }
-              
+
         /// <summary>
         /// Gets or sets the RateOfExchange field.
         /// </summary>
         [DataMember]
         public string RateOfExchange { get; set; }
-              
+
         /// <summary>
         /// Gets or sets the TransactionAuthorisationDate field.
         /// </summary>
         [DataMember]
         public long TransactionAuthorisationDate { get; set; }
-              
+
         /// <summary>
         /// Gets or sets the TransactionCurrencyCode field.
         /// </summary>
         [DataMember]
         public string TransactionCurrencyCode { get; set; }
-              
+
         /// <summary>
         /// Gets or sets the TransactionDate field.
         /// </summary>
         [DataMember]
         public long TransactionDate { get; set; }
-              
+
         /// <summary>
         /// Gets or sets the TransactionReference field.
         /// </summary>
         [DataMember]
         public string TransactionReference { get; set; }
-              
+
         /// <summary>
         /// Gets or sets the TransactionSequenceNumber field.
         /// </summary>
         [DataMember]
         public string TransactionSequenceNumber { get; set; }
-              
+
         /// <summary>
         /// Gets or sets the TransactionTypeCode field.
         /// </summary>
         [DataMember]
         public string TransactionTypeCode { get; set; }
-              
+
         /// <summary>
         /// Gets or sets the TransactionTypeDescription field.
         /// </summary>
         [DataMember]
         public string TransactionTypeDescription { get; set; }
-              
+
         /// <summary>
         /// Gets or sets the TransactionComponent field.
         /// </summary>
         [DataMember]
-        public TransactionComponent TransactionComponent { get; set; }
-                
+        public TransactionComponent[] TransactionComponent { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Transaction"/> class.
         /// </summary>
@@ -124,7 +124,7 @@ namespace CsvToAvro.Utility.Models
         /// <param name="transactionTypeCode">The transactionTypeCode.</param>
         /// <param name="transactionTypeDescription">The transactionTypeDescription.</param>
         /// <param name="transactionComponent">The transactionComponent.</param>
-        public Transaction(string keyIdPolis, string keyDekkingsNummer, string keySchadeBoekingsNummer, string payee, string rateOfExchange, long transactionAuthorisationDate, string transactionCurrencyCode, long transactionDate, string transactionReference, string transactionSequenceNumber, string transactionTypeCode, string transactionTypeDescription, TransactionComponent transactionComponent)
+        public Transaction(string keyIdPolis, string keyDekkingsNummer, string keySchadeBoekingsNummer, string payee, string rateOfExchange, long transactionAuthorisationDate, string transactionCurrencyCode, long transactionDate, string transactionReference, string transactionSequenceNumber, string transactionTypeCode, string transactionTypeDescription, TransactionComponent[] transactionComponent)
         {
             this.KeyIdPolis = keyIdPolis;
             this.KeyDekkingsNummer = keyDekkingsNummer;

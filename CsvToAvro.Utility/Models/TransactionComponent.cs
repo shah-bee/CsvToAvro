@@ -57,7 +57,7 @@ namespace CsvToAvro.Utility.Models
         /// Gets or sets the TransactionComponentTypeDescription field.
         /// </summary>
         [DataMember]
-        public long TransactionComponentTypeDescription { get; set; }
+        public string TransactionComponentTypeDescription { get; set; }
                 
         /// <summary>
         /// Initializes a new instance of the <see cref="TransactionComponent"/> class.
@@ -75,7 +75,7 @@ namespace CsvToAvro.Utility.Models
         /// <param name="transactionAmount">The transactionAmount.</param>
         /// <param name="transactionComponentTypeCode">The transactionComponentTypeCode.</param>
         /// <param name="transactionComponentTypeDescription">The transactionComponentTypeDescription.</param>
-        public TransactionComponent(string keyIdPolis, string keyDekkingsNummer, string keySchadeBoekingsNummer, string transactionAmount, string transactionComponentTypeCode, long transactionComponentTypeDescription)
+        public TransactionComponent(string keyIdPolis, string keyDekkingsNummer, string keySchadeBoekingsNummer, string transactionAmount, string transactionComponentTypeCode, string transactionComponentTypeDescription)
         {
             this.KeyIdPolis = keyIdPolis;
             this.KeyDekkingsNummer = keyDekkingsNummer;
