@@ -310,19 +310,19 @@ namespace CsvToAvro.Utility.Models
         /// </summary>
         [DataMember]
         public string XCSClaimCode { get; set; }
-              
+
         /// <summary>
         /// Gets or sets the Claimant field.
         /// </summary>
-        //[DataMember]
-        //public Claimant Claimant { get; set; }
-              
+        [DataMember]
+        public Claimant[] Claimant { get; set; }
+
         /// <summary>
         /// Gets or sets the Policy field.
         /// </summary>
-        //[DataMember]
-        //public Policy Policy { get; set; }
-                
+        [DataMember]
+        public Policy Policy { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Claim"/> class.
         /// </summary>

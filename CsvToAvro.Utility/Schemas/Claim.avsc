@@ -238,143 +238,137 @@
       }
     },
     {
-      "name": "Policies",
-      "type": {
-        "type": "array",
-        "items": {
-          "name": "Policy",
-          "type": "record",
-          "default": null,
-          "fields": [
-            {
-              "name": "PolicyCode",
-              "type": "string"
-            },
-            {
-              "name": "PolicyReference",
-              "type": "string"
-            },
-            {
-              "name": "SectionCode",
-              "type": "string"
-            },
-            {
-              "name": "SectionReference",
-              "type": "string"
-            },
-            {
+      "name": "Policy",
+      "type": "record",
+      "fields": [
+        {
+          "name": "PolicyCode",
+          "type": "string"
+        },
+        {
+          "name": "PolicyReference",
+          "type": "string"
+        },
+        {
+          "name": "SectionCode",
+          "type": "string"
+        },
+        {
+          "name": "SectionReference",
+          "type": "string"
+        },
+        {
+          "name": "Sections",
+          "type": {
+            "type": "array",
+            "items": {
               "name": "Section",
-              "type": {
-                "type": "record",
-                "name": "Section",
-                "default": null,
-                "fields": [
-                  {
-                    "name": "KeyIdPolis",
-                    "type": "string"
-                  },
-                  {
-                    "name": "KeyDekkingsNummer",
-                    "type": "string"
-                  },
-                  {
+              "fields": [
+                {
+                  "name": "KeyIdPolis",
+                  "type": "string"
+                },
+                {
+                  "name": "KeyDekkingsNummer",
+                  "type": "string"
+                },
+                {
+                  "name": "Transactions",
+                  "type": {
+                    "type": "record",
                     "name": "Transaction",
-                    "type": {
-                      "type": "record",
-                      "name": "Transaction",
-                      "fields": [
-                        {
-                          "name": "KeyIdPolis",
-                          "type": "string"
-                        },
-                        {
-                          "name": "KeyDekkingsNummer",
-                          "type": "string"
-                        },
-                        {
-                          "name": "KeySchadeBoekingsNummer",
-                          "type": "string"
-                        },
-                        {
-                          "name": "Payee",
-                          "type": "string"
-                        },
-                        {
-                          "name": "RateOfExchange",
-                          "type": "string"
-                        },
-                        {
-                          "name": "TransactionAuthorisationDate",
-                          "type": "long"
-                        },
-                        {
-                          "name": "TransactionCurrencyCode",
-                          "type": "string"
-                        },
-                        {
-                          "name": "TransactionDate",
-                          "type": "long"
-                        },
-                        {
-                          "name": "TransactionReference",
-                          "type": "string"
-                        },
-                        {
-                          "name": "TransactionSequenceNumber",
-                          "type": "string"
-                        },
-                        {
-                          "name": "TransactionTypeCode",
-                          "type": "string"
-                        },
-                        {
-                          "name": "TransactionTypeDescription",
-                          "type": "string"
-                        },
-                        {
+                    "fields": [
+                      {
+                        "name": "KeyIdPolis",
+                        "type": "string"
+                      },
+                      {
+                        "name": "KeyDekkingsNummer",
+                        "type": "string"
+                      },
+                      {
+                        "name": "KeySchadeBoekingsNummer",
+                        "type": "string"
+                      },
+                      {
+                        "name": "Payee",
+                        "type": "string"
+                      },
+                      {
+                        "name": "RateOfExchange",
+                        "type": "string"
+                      },
+                      {
+                        "name": "TransactionAuthorisationDate",
+                        "type": "long"
+                      },
+                      {
+                        "name": "TransactionCurrencyCode",
+                        "type": "string"
+                      },
+                      {
+                        "name": "TransactionDate",
+                        "type": "long"
+                      },
+                      {
+                        "name": "TransactionReference",
+                        "type": "string"
+                      },
+                      {
+                        "name": "TransactionSequenceNumber",
+                        "type": "string"
+                      },
+                      {
+                        "name": "TransactionTypeCode",
+                        "type": "string"
+                      },
+                      {
+                        "name": "TransactionTypeDescription",
+                        "type": "string"
+                      },
+                      {
+                        "name": "TransactionComponent",
+                        "type": {
+                          "type": "record",
                           "name": "TransactionComponent",
-                          "type": {
-                            "type": "record",
-                            "name": "TransactionComponent",
-                            "fields": [
-                              {
-                                "name": "KeyIdPolis",
-                                "type": "string"
-                              },
-                              {
-                                "name": "KeyDekkingsNummer",
-                                "type": "string"
-                              },
-                              {
-                                "name": "KeySchadeBoekingsNummer",
-                                "type": "string"
-                              },
-                              {
-                                "name": "TransactionAmount",
-                                "type": "string"
-                              },
-                              {
-                                "name": "TransactionComponentTypeCode",
-                                "type": "string"
-                              },
-                              {
-                                "name": "TransactionComponentTypeDescription",
-                                "type": "long"
-                              }
-                            ]
-                          }
+                          "fields": [
+                            {
+                              "name": "KeyIdPolis",
+                              "type": "string"
+                            },
+                            {
+                              "name": "KeyDekkingsNummer",
+                              "type": "string"
+                            },
+                            {
+                              "name": "KeySchadeBoekingsNummer",
+                              "type": "string"
+                            },
+                            {
+                              "name": "TransactionAmount",
+                              "type": "string"
+                            },
+                            {
+                              "name": "TransactionComponentTypeCode",
+                              "type": "string"
+                            },
+                            {
+                              "name": "TransactionComponentTypeDescription",
+                              "type": "long"
+                            }
+                          ]
                         }
-                      ]
-                    }
+                      }
+                    ]
                   }
+                }
 
-                ]
-              }
+              ]
             }
-
-          ]
+          
+          }
         }
-      }
+      ]
     }
   ]
 }

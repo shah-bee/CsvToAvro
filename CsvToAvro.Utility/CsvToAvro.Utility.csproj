@@ -277,6 +277,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="claim.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>claim.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\ObjectSynchronizer.cs" />
     <Compile Include="Helper\PropertyMapper.cs" />
     <Compile Include="Models\Claim.cs" />
     <Compile Include="Models\Claimant.cs" />
@@ -296,6 +302,17 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="claim.xsc">
+      <DependentUpon>claim.xsd</DependentUpon>
+    </None>
+    <None Include="claim.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>claim.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="claim.xss">
+      <DependentUpon>claim.xsd</DependentUpon>
+    </None>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
