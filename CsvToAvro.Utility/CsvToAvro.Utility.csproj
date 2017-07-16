@@ -150,108 +150,8 @@
       <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Guifreaks.NavigationBar.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Guifreaks.NavigationBar.XmlSerializers, Version=0.1.0.0, Culture=neutral, PublicKeyToken=bf0afd6b35ed9434, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Guifreaks.NavigationBar.XmlSerializers.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.80.0.1373, Culture=neutral, PublicKeyToken=1b03e6acf1164f73">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\ICSharpCode.SharpZipLib.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Interop.C2SBarCodeOCX, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4495254afeb8e356, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Interop.C2SBarCodeOCX.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Interop.IWshRuntimeLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4495254afeb8e356">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Interop.IWshRuntimeLibrary.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Interop.NetFwTypeLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4495254afeb8e356">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Interop.NetFwTypeLib.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Interop.SHDocVw, Version=1.1.0.0, Culture=neutral, PublicKeyToken=4495254afeb8e356, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Interop.SHDocVw.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="itextsharp, Version=5.3.5.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\itextsharp.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Jscape.Ssh, Version=2.1.2.0, Culture=neutral, PublicKeyToken=504a4aa00214df6f">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Jscape.Ssh.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="LogHelper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=40bf32e907dd397c, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\LogHelper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MdiTabControl, Version=1.0.2785.31416, Culture=neutral, PublicKeyToken=4495254afeb8e356, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\MdiTabControl.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.ExceptionMessageBox, Version=9.0.242.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Microsoft.ExceptionMessageBox.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Hadoop.Avro, Version=1.5.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Hadoop.Avro.1.5.6\lib\net45\Microsoft.Hadoop.Avro.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.IdentityModel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Microsoft.IdentityModel.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Office.Interop.Excel, Version=10.0.4504.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Microsoft.Office.Interop.Excel.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Microsoft.Office.Interop.Outlook, Version=11.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Microsoft.Office.Interop.Outlook.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Microsoft.PointOfService, Version=1.12.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Microsoft.PointOfService.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Microsoft.Practices.Unity.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Microsoft.Practices.Unity.Configuration.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Interception, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Microsoft.Practices.Unity.Interception.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.ReportViewer.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Microsoft.ReportViewer.Common.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.ReportViewer.WebForms, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Microsoft.ReportViewer.WebForms.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.ReportViewer.WinForms, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpnComponentsDependencies.1.0.0.0\lib\Microsoft.ReportViewer.WinForms.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.VisualBasic">
@@ -278,13 +178,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractImporter.cs" />
-    <Compile Include="Claim\ClaimImporter.cs" />
+    <Compile Include="Helper\Helper.cs" />
+    <Compile Include="Helper\LogWrapper.cs" />
+    <Compile Include="Importer\ClaimImporter.cs" />
     <Compile Include="Helper\Constants.cs" />
     <Compile Include="Models\Claim.cs" />
     <Compile Include="Models\Claimant.cs" />
     <Compile Include="Models\ClaimLeadIndicator.cs" />
     <Compile Include="ExportToAvro.cs" />
-    <Compile Include="ImportCsv.cs" />
     <Compile Include="Models\Policy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Section.cs" />

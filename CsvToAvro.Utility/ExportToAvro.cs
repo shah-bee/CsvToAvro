@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using CsvToAvro.Utility.Models;
 using Microsoft.Hadoop.Avro.Container;
-using Microsoft.Practices.EnterpriseLibrary.Common.Utility;
 
 namespace CsvToAvro.Utility
 {
@@ -29,7 +28,7 @@ namespace CsvToAvro.Utility
                     using (var writer = new SequentialWriter<Models.Claim>(w, 24))
                     {
                         // Serialize the data to stream by using the sequential writer
-                        values.ForEach(writer.Write);
+                        values.ToList().ForEach(writer.Write);
                     }
                 }
 

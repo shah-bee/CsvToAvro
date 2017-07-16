@@ -3,141 +3,32 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 using CsvToAvro.Utility.Helper;
 using CsvToAvro.Utility.Models;
 using Microsoft.VisualBasic.FileIO;
+using NLog;
+using System.Globalization;
 
-namespace CsvToAvro.Utility
+namespace CsvToAvro.Utility.Claim
 {
-    public class ImportCsv
+    public class ClaimImporter : AbstractImporter
     {
-        private List<DataTable> importedData;
-        private List<object> objectList;
-        private readonly string importDirectoryPath;
-        private readonly string fileType;
-        public ImportCsv(string directoryPath, string file)
+        public IEnumerable<Models.Claim> Claims;
+
+        private LogWrapper Logger;
+        public ClaimImporter(string path, string fileType, string fileName, LogWrapper logger) : base(path, fileType, fileName, logger)
         {
-            importDirectoryPath = directoryPath;
-            fileType = file;
-            importedData = new List<DataTable>();
+            this.Logger = logger;
         }
 
-        public IEnumerable<object> ImportAllFiles()
+        public override void Import()
         {
-            switch (fileType.ToLowerInvariant())
-            {
-                case "claim":
-                    return FillObjectWithData("EDF " + fileType + "*.csv");
-                default:
-                    return Enumerable.Empty<object>();
-            }
+            Claims = GetClaims();
         }
 
-        private string DetermineTableName(string filePath)
-        {
-            switch (fileType.ToLower())
-            {
-                case "claim":
-                    return DetermineTableNameForClaim(filePath);
-                default:
-                    return string.Empty;
-            }
-        }
-
-        private string DetermineTableNameForClaim(string filePath)
-        {
-            if (filePath.ToLower().Contains("claimarrayclaimant"))
-            {
-                return Constants.ClaimClaimant;
-            }
-            else if (filePath.ToLower().Contains("claimarraypolicy"))
-            {
-                return Constants.ClaimPolicy;
-            }
-            else if (filePath.ToLower().Contains("claimarraysection"))
-            {
-                return Constants.ClaimSection;
-            }
-            else if (filePath.ToLower().Contains("claimarraytransactioncomponent"))
-            {
-                return Constants.ClaimTransactionComponent;
-            }
-            else if (filePath.ToLower().Contains("claimarraytransaction"))
-            {
-                return Constants.ClaimTransaction;
-            }
-            else
-            {
-                return Constants.Claim;
-            }
-        }
-
-        /// <summary>
-        /// Generates a consolidated datatable for the corresponding fileType, for example claim,policy,settlement etc.,
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
-        private DataTable GetDataTableFromCsvFile(string fileName)
-        {
-            var csvData = new DataTable(DetermineTableName(fileName));
-            try
-            {
-                using (var csvReader = new TextFieldParser(fileName))
-                {
-                    csvReader.SetDelimiters("|");
-                    csvReader.HasFieldsEnclosedInQuotes = true;
-                    //read column names from the first row
-                    var colFields = csvReader.ReadFields();
-                    //iterate each column to create the DataColumn for the DataTable structure
-                    foreach (var column in colFields)
-                    {
-                        var datcolumn = new DataColumn(column);
-                        csvData.Columns.Add(datcolumn);
-                    }
-                    //now on to the data
-                    while (!csvReader.EndOfData)
-                    {
-                        var fieldData = csvReader.ReadFields();
-                        ////Making empty value as null
-                        //for (var i = 0; i < fieldData.Length; i++)
-                        //{
-                        //    if (fieldData[i] == "")
-                        //        fieldData[i] = null;
-                        //} //end for
-                        //add the DataRow
-                        csvData.Rows.Add(fieldData);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                //add finally stuff here
-            }
-            return csvData;
-        }
-
-        private IEnumerable<object> FillObjectWithData(string filePath)
-        {
-            objectList = new List<object>();
-
-            importedData = Directory.GetFiles(importDirectoryPath, filePath).Select(GetDataTableFromCsvFile).ToList();
-
-            switch (fileType.ToLower())
-            {
-                case "claim":
-                    return FillClaimObjects();
-                case "policy":
-                    break;
-            }
-            return Enumerable.Empty<object>();
-        }
-
-        private IEnumerable<Models.Claim> FillClaimObjects()
+        private IEnumerable<Models.Claim> GetClaims()
         {
             var claimTable = importedData.FirstOrDefault(o => o.TableName.Equals(Constants.Claim));
 
@@ -169,16 +60,16 @@ namespace CsvToAvro.Utility
                                 (ClaimLeadIndicator)
                                     Enum.Parse(typeof(ClaimLeadIndicator), row["ClaimLeadIndicator"].ToString()),
                             ClaimLocationState = row["ClaimLocationState"].ToString(),
-                            //ClaimOpenDate = Convert.ToInt64(row["ClaimOpenDate"]),
+                            ClaimOpenDate = row["ClaimOpenDate"].ToString().ConvertToLong(),//, "yyyy-mm-dd", CultureInfo.InvariantCulture).ConvertDateToLong(),
                             ClaimReference = row["ClaimReference"].ToString(),
-                            //ClaimReportDate = Convert.ToInt64(row["ClaimReportDate"]),
+                            ClaimReportDate = row["ClaimReportDate"].ToString().ConvertToLong(),
                             ClaimStatus = row["ClaimStatus"].ToString(),
-                            //ClaimYearOfAccount = Convert.ToInt64(row["ClaimYearOfAccount"]),
-                            //CloseDate = Convert.ToInt64(row["CloseDate"]),
+                            ClaimYearOfAccount = row["ClaimYearOfAccount"].ToString().ConvertToLong(),
+                            CloseDate = row["CloseDate"].ToString().ConvertToLong(),
                             CoverageNarrative = row["CoverageNarrative"].ToString(),
                             CoverholderWithClaimsAuthority = row["CoverholderWithClaimsAuthority"].ToString(),
-                            //DateOfDeclinature = Convert.ToInt64(row["DateOfDeclinature"]),
-                            //DateOfLoss = Convert.ToInt64(row["DateOfLoss"]),
+                            DateOfDeclinature = row["DateOfDeclinature"].ToString().ConvertToLong(),
+                          //  DateOfLoss = row["DateOfLoss"].ToString().ConvertToLong(),
                             GeographicalOriginOfTheClaim = row["GeographicalOriginOfTheClaim"].ToString(),
                             LineageReference = row["LineageReference"].ToString(),
                             LitigationCode = row["LitigationCode"].ToString(),
@@ -208,7 +99,7 @@ namespace CsvToAvro.Utility
                     }
                     catch (Exception ex)
                     {
-                        //TODO :: LOG EXCEPTION and continue creating the claim
+                        Logger.logger.Log(LogLevel.Error, ex, string.Format("While importing EDF claim  Claimnumber - {0} : ", row["KeyInternSchadenummer"]));
                     }
                 }
             if (claims.Any())
@@ -240,7 +131,8 @@ namespace CsvToAvro.Utility
                     }
                     catch (Exception ex)
                     {
-                        //// TODO : Log exception
+                        Logger.logger.Log(LogLevel.Error, ex,
+                            string.Format("While importing EDF claim policy  - {0} : Claimnumber and PolicyCode : {1}", row["KeyInternSchadenummer"], row["PolicyCode"]));
                     }
                 }
 
@@ -272,7 +164,9 @@ namespace CsvToAvro.Utility
                     }
                     catch (Exception ex)
                     {
-                        //// TODO : Log exception
+                        Logger.logger.Log(LogLevel.Error, ex,
+    string.Format("While importing EDF claim section for - {0} : ClaimNumber and PolicyId : {1}", row["KeyInternSchadenummer"], row["KeyIdPolis"]));
+
                     }
                 }
 
@@ -299,9 +193,9 @@ namespace CsvToAvro.Utility
                                 KeySchadeBoekingsNummer = row["KeySchadeBoekingsNummer"].ToString(),
                                 Payee = row["Payee"].ToString(),
                                 RateOfExchange = row["RateOfExchange"].ToString(),
-                                //TransactionAuthorisationDate =Convert.ToInt64(row["TransactionAuthorisationDate"]),
+                                TransactionAuthorisationDate = row["TransactionAuthorisationDate"].ToString().ConvertToLong(),
                                 TransactionCurrencyCode = row["TransactionCurrencyCode"].ToString(),
-                                //TransactionDate = row["TransactionDate"].ToString(),
+                                TransactionDate = row["TransactionDate"].ToString().ConvertToLong(),
                                 TransactionReference = row["TransactionReference"].ToString(),
                                 TransactionSequenceNumber = row["TransactionSequenceNumber"].ToString(),
                                 TransactionTypeCode = row["TransactionTypeCode"].ToString(),
@@ -314,7 +208,9 @@ namespace CsvToAvro.Utility
                     }
                     catch (Exception ex)
                     {
-                        //// TODO : Log exception
+                        Logger.logger.Log(LogLevel.Error, ex,
+                            string.Format("While importing EDF claim transaction for - {0} : ClaimNumber and PolicyId : {1}", row["KeyInternSchadenummer"], row["KeyIdPolis"]), null);
+
                     }
                 }
 
@@ -350,7 +246,8 @@ namespace CsvToAvro.Utility
                     }
                     catch (Exception ex)
                     {
-                        //// TODO : Log exception
+                        Logger.logger.Log(LogLevel.Error, ex,
+                           string.Format("While importing EDF claim transaction component for - {0} : ClaimNumber and PolicyId : {1}", row["KeyInternSchadenummer"], row["KeyIdPolis"]));
                     }
                 }
 
@@ -364,19 +261,38 @@ namespace CsvToAvro.Utility
             var claimants = new List<Claimant>();
 
             if (claimantTable != null)
-                claimants.AddRange(from DataRow row in claimantTable.Rows
-                                   where claimNumber.Equals(row["KeyInternSchadenummer"].ToString())
-                                   select new Claimant
-                                   {
-                                       ClaimantName = row["ClaimantName"].ToString(),
-                                       ClaimantAddressArea = row["ClaimantAddressArea"].ToString(),
-                                       ClaimantAddressCity = row["ClaimantAddressCity"].ToString(),
-                                       ClaimantAddressStreet = row["ClaimantAddressStreet"].ToString(),
-                                       ClaimantCode = row["ClaimantCode"].ToString(),
-                                       ClaimantPostCode = row["ClaimantPostCode"].ToString()
-                                   });
+
+                foreach (DataRow row in claimantTable.Rows)
+                {
+                    if (claimNumber.Equals(row["KeyInternSchadenummer"].ToString()))
+                    {
+                        try
+                        {
+                            var claimant = new Claimant
+                            {
+                                ClaimantName = row["ClaimantName"].ToString(),
+                                ClaimantAddressArea = row["ClaimantAddressArea"].ToString(),
+                                ClaimantAddressCity = row["ClaimantAddressCity"].ToString(),
+                                ClaimantAddressStreet = row["ClaimantAddressStreet"].ToString(),
+                                ClaimantCode = row["ClaimantCode"].ToString(),
+                                ClaimantPostCode = row["ClaimantPostCode"].ToString()
+                            };
+
+                            claimants.Add(claimant);
+                        }
+                        catch (Exception exception)
+                        {
+                            Logger.logger.Log(LogLevel.Error, exception,
+                           string.Format("While importing EDF Claim Claimant for - {0} : ClaimNumber", row["KeyInternSchadenummer"]));
+
+                        }
+                    }
+
+                }
+
             return claimants;
         }
+
 
     }
 }
