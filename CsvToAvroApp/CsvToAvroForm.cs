@@ -82,6 +82,16 @@ namespace CsvToAvroApp
             if (result.Any())
             {
                 var dialogResult = MessageBox.Show("Data imported successfully!", "Import result", MessageBoxButtons.OKCancel);
+
+                if (dialogResult == DialogResult.OK)
+                {
+                    var result1 = new ExportToAvro(exportLocation.Text, result.Cast<Claim>(), fileTypes.SelectedItem.ToString());
+                    if (ExportToAvro.IsImported)
+                    {
+                        MessageBox.Show("Successfully converted to avro file at " + exportLocation.Text);
+                        return;
+                    }
+                }
             }
             else
             {
@@ -89,12 +99,6 @@ namespace CsvToAvroApp
                 return;
             }
 
-            var result1 = new ExportToAvro(exportLocation.Text, result.Cast<Claim>(), fileTypes.SelectedItem.ToString());
-            if (ExportToAvro.IsImported)
-            {
-                MessageBox.Show("Successfully converted to avro file at " + exportLocation.Text);
-                return;
-            }
 
         }
 
