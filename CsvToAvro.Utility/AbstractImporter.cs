@@ -19,9 +19,8 @@ namespace CsvToAvro.Utility
         private readonly string fileName;
         private LogWrapper loggerWrapper;
 
-        public AbstractImporter(string importPath, string fileType, string fileName, LogWrapper logger)
+        protected AbstractImporter(string importPath, string fileType, string fileName, LogWrapper logger)
         {
-
             this.importPath = importPath;
             this.fileType = fileType;
             this.fileName = fileName;
@@ -33,11 +32,17 @@ namespace CsvToAvro.Utility
 
         private void ReadData()
         {
-            importedData = Directory.GetFiles(importPath, fileName).Select(GetDataTableFromCsvFile).ToList();
-
-            if (!importedData.Any())
+            try
             {
-                loggerWrapper.logger.Log(LogLevel.Warn, "Data not found to be imported!");
+                importedData = Directory.GetFiles(importPath, fileName).Select(GetDataTableFromCsvFile).ToList();
+                if (!importedData.Any())
+                {
+                    loggerWrapper.Log(LogLevel.Fatal, null, "Data not found to be imported!");
+                }
+            }
+            catch (DirectoryNotFoundException exception)
+            {
+                loggerWrapper.Log(LogLevel.Fatal, exception, "Directory not found!");
             }
         }
 

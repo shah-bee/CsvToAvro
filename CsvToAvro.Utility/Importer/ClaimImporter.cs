@@ -30,84 +30,86 @@ namespace CsvToAvro.Utility.Claim
 
         private IEnumerable<Models.Claim> GetClaims()
         {
-            var claimTable = importedData.FirstOrDefault(o => o.TableName.Equals(Constants.Claim));
-
-            var claims = new List<Models.Claim>();
-
-            if (claimTable != null)
-                foreach (DataRow row in claimTable.Rows)
-                {
-                    try
-                    {
-                        var claim = new Models.Claim
-                        {
-                            KeyInternSchadenummer = row["KeyInternSchadenummer"].ToString(),
-                            BackgroundNarrative = row["BackgroundNarrative"].ToString(),
-                            CatastropheCode = row["CatastropheCode"].ToString(),
-                            CatastropheDescription = row["CatastropheDescription"].ToString(),
-                            ClaimCode = row["ClaimCode"].ToString(),
-                            ClaimCountry = row["ClaimCountry"].ToString(),
-                            ClaimDeniedIndicator = row["ClaimDeniedIndicator"].ToString(),
-                            ClaimDescription = row["ClaimDescription"].ToString(),
-                            ClaimDiary = row["ClaimDiary"].ToString(),
-                            ClaimEventCode = row["ClaimEventCode"].ToString(),
-                            ClaimEventDescription = row["ClaimEventDescription"].ToString(),
-                            ClaimHandler = row["ClaimHandler"].ToString(),
-                            ClaimHandlerCode = row["ClaimHandlerCode"].ToString(),
-                            ClaimInsured = row["ClaimInsured"].ToString(),
-                            ClaimLastModified = row["ClaimLastModified"].ToString(),
-                            ClaimLeadIndicator =
-                                (ClaimLeadIndicator)
-                                    Enum.Parse(typeof(ClaimLeadIndicator), row["ClaimLeadIndicator"].ToString()),
-                            ClaimLocationState = row["ClaimLocationState"].ToString(),
-                            //ClaimOpenDate = row["ClaimOpenDate"].ToString().ConvertToLong(),//, "yyyy-mm-dd", CultureInfo.InvariantCulture).ConvertDateToLong(),
-                            ClaimReference = row["ClaimReference"].ToString(),
-                            //ClaimReportDate = row["ClaimReportDate"].ToString().ConvertToLong(),
-                            ClaimStatus = row["ClaimStatus"].ToString(),
-                            //ClaimYearOfAccount = row["ClaimYearOfAccount"].ToString().ConvertToLong(),
-                            // CloseDate = row["CloseDate"].ToString().ConvertToLong(),
-                            CoverageNarrative = row["CoverageNarrative"].ToString(),
-                            CoverholderWithClaimsAuthority = row["CoverholderWithClaimsAuthority"].ToString(),
-                            //DateOfDeclinature = row["DateOfDeclinature"].ToString().ConvertToLong(),
-                            //DateOfLoss = row["DateOfLoss"].ToString().ConvertToLong(),
-                            GeographicalOriginOfTheClaim = row["GeographicalOriginOfTheClaim"].ToString(),
-                            LineageReference = row["LineageReference"].ToString(),
-                            LitigationCode = row["LitigationCode"].ToString(),
-                            LitigationDescription = row["LitigationDescription"].ToString(),
-                            MaximumPotentialLoss = row["MaximumPotentialLoss"].ToString(),
-                            MaximumPotentialLossCurrency = row["MaximumPotentialLossCurrency"].ToString(),
-                            MaximumPotentialLossPercentage = row["MaximumPotentialLossPercentage"].ToString(),
-                            OriginalCurrencyCode = row["OriginalCurrencyCode"].ToString(),
-                            PreviousClaimReference = row["PreviousClaimReference"].ToString(),
-                            PreviousSourceSystem = row["PreviousSourceSystem"].ToString(),
-                            PreviousSourceSystemDescription = row["PreviousSourceSystemDescription"].ToString(),
-                            ReasonDeclined = row["ReasonDeclined"].ToString(),
-                            ReserveNarrative = row["ReserveNarrative"].ToString(),
-                            ServiceProviderReference = row["ServiceProviderReference"].ToString(),
-                            SettlementCurrencyCode = row["SettlementCurrencyCode"].ToString(),
-                            SubrogationSalvageIndicator = row["SubrogationSalvageIndicator"].ToString(),
-                            TPAHandleIndicator = row["TPAHandleIndicator"].ToString(),
-                            TacticsNarrative = row["TacticsNarrative"].ToString(),
-                            TriageCode = row["TriageCode"].ToString(),
-                            XCSClaimCode = row["XCSClaimCode"].ToString(),
-                            XCSClaimRef = row["XCSClaimRef"].ToString(),
-                            Policy = GetPolicyByClaimNumber(row["KeyInternSchadenummer"].ToString()),
-                            Claimant = GetClaimantsByClaimNumber(row["KeyInternSchadenummer"].ToString()).ToArray()
-
-                        };
-                        claims.Add(claim);
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.Log(LogLevel.Error, ex,
-                            $"While importing EDF claim  Claimnumber - {row["KeyInternSchadenummer"]} : ");
-                    }
-                }
-            if (claims.Any())
+            if (importedData != null && importedData.Any())
             {
-                return claims;
-            }
+                var claimTable = importedData.FirstOrDefault(o => o.TableName.Equals(Constants.Claim));
 
+                var claims = new List<Models.Claim>();
+
+                if (claimTable != null)
+                    foreach (DataRow row in claimTable.Rows)
+                    {
+                        try
+                        {
+                            var claim = new Models.Claim
+                            {
+                                KeyInternSchadenummer = row["KeyInternSchadenummer"].ToString(),
+                                BackgroundNarrative = row["BackgroundNarrative"].ToString(),
+                                CatastropheCode = row["CatastropheCode"].ToString(),
+                                CatastropheDescription = row["CatastropheDescription"].ToString(),
+                                ClaimCode = row["ClaimCode"].ToString(),
+                                ClaimCountry = row["ClaimCountry"].ToString(),
+                                ClaimDeniedIndicator = row["ClaimDeniedIndicator"].ToString(),
+                                ClaimDescription = row["ClaimDescription"].ToString(),
+                                ClaimDiary = row["ClaimDiary"].ToString(),
+                                ClaimEventCode = row["ClaimEventCode"].ToString(),
+                                ClaimEventDescription = row["ClaimEventDescription"].ToString(),
+                                ClaimHandler = row["ClaimHandler"].ToString(),
+                                ClaimHandlerCode = row["ClaimHandlerCode"].ToString(),
+                                ClaimInsured = row["ClaimInsured"].ToString(),
+                                ClaimLastModified = row["ClaimLastModified"].ToString(),
+                                ClaimLeadIndicator =
+                                    (ClaimLeadIndicator)
+                                        Enum.Parse(typeof(ClaimLeadIndicator), row["ClaimLeadIndicator"].ToString()),
+                                ClaimLocationState = row["ClaimLocationState"].ToString(),
+                                ClaimOpenDate = row.ConvertToLong("ClaimOpenDate", Logger),
+                                ClaimReference = row["ClaimReference"].ToString(),
+                                ClaimReportDate = row.ConvertToLong("ClaimReportDate", Logger),
+                                ClaimStatus = row["ClaimStatus"].ToString(),
+                                ClaimYearOfAccount = row.ConvertToLong("ClaimYearOfAccount", Logger),
+                                CloseDate = row.ConvertToLong("CloseDate", Logger),
+                                CoverageNarrative = row["CoverageNarrative"].ToString(),
+                                CoverholderWithClaimsAuthority = row["CoverholderWithClaimsAuthority"].ToString(),
+                                DateOfDeclinature = row.ConvertToLong("DateOfDeclinature", Logger),
+                                DateOfLoss = row.ConvertToLong("DateOfLoss", Logger),
+                                GeographicalOriginOfTheClaim = row["GeographicalOriginOfTheClaim"].ToString(),
+                                LineageReference = row["LineageReference"].ToString(),
+                                LitigationCode = row["LitigationCode"].ToString(),
+                                LitigationDescription = row["LitigationDescription"].ToString(),
+                                MaximumPotentialLoss = row["MaximumPotentialLoss"].ToString(),
+                                MaximumPotentialLossCurrency = row["MaximumPotentialLossCurrency"].ToString(),
+                                MaximumPotentialLossPercentage = row["MaximumPotentialLossPercentage"].ToString(),
+                                OriginalCurrencyCode = row["OriginalCurrencyCode"].ToString(),
+                                PreviousClaimReference = row["PreviousClaimReference"].ToString(),
+                                PreviousSourceSystem = row["PreviousSourceSystem"].ToString(),
+                                PreviousSourceSystemDescription = row["PreviousSourceSystemDescription"].ToString(),
+                                ReasonDeclined = row["ReasonDeclined"].ToString(),
+                                ReserveNarrative = row["ReserveNarrative"].ToString(),
+                                ServiceProviderReference = row["ServiceProviderReference"].ToString(),
+                                SettlementCurrencyCode = row["SettlementCurrencyCode"].ToString(),
+                                SubrogationSalvageIndicator = row["SubrogationSalvageIndicator"].ToString(),
+                                TPAHandleIndicator = row["TPAHandleIndicator"].ToString(),
+                                TacticsNarrative = row["TacticsNarrative"].ToString(),
+                                TriageCode = row["TriageCode"].ToString(),
+                                XCSClaimCode = row["XCSClaimCode"].ToString(),
+                                XCSClaimRef = row["XCSClaimRef"].ToString(),
+                                Policy = GetPolicyByClaimNumber(row["KeyInternSchadenummer"].ToString()),
+                                Claimant = GetClaimantsByClaimNumber(row["KeyInternSchadenummer"].ToString()).ToArray()
+
+                            };
+                            claims.Add(claim);
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Log(LogLevel.Error, ex,
+                                $"While importing EDF claim  Claimnumber - {row["KeyInternSchadenummer"]} : ");
+                        }
+                    }
+                if (claims.Any())
+                {
+                    return claims;
+                }
+            }
             return Enumerable.Empty<Models.Claim>();
         }
 
@@ -194,9 +196,9 @@ namespace CsvToAvro.Utility.Claim
                                 KeySchadeBoekingsNummer = row["KeySchadeBoekingsNummer"].ToString(),
                                 Payee = row["Payee"].ToString(),
                                 RateOfExchange = row["RateOfExchange"].ToString(),
-                                //  TransactionAuthorisationDate = row["TransactionAuthorisationDate"].ToString().ConvertToLong(),
+                                TransactionAuthorisationDate = row.ConvertToLong("TransactionAuthorisationDate", Logger),
                                 TransactionCurrencyCode = row["TransactionCurrencyCode"].ToString(),
-                                //TransactionDate = row["TransactionDate"].ToString().ConvertToLong(),
+                                TransactionDate = row.ConvertToLong("TransactionDate", Logger),
                                 TransactionReference = row["TransactionReference"].ToString(),
                                 TransactionSequenceNumber = row["TransactionSequenceNumber"].ToString(),
                                 TransactionTypeCode = row["TransactionTypeCode"].ToString(),

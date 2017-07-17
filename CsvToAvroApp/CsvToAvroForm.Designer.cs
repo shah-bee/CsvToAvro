@@ -43,6 +43,7 @@ namespace CsvToAvroApp
             this.fileTypes = new System.Windows.Forms.ComboBox();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.ExportlocationDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // ConvertCsvToAvro
@@ -129,6 +130,7 @@ namespace CsvToAvroApp
             this.fileTypes.Name = "fileTypes";
             this.fileTypes.Size = new System.Drawing.Size(279, 21);
             this.fileTypes.TabIndex = 9;
+            this.fileTypes.SelectedIndexChanged += new System.EventHandler(this.fileTypes_SelectedIndexChanged);
             // 
             // cancelBtn
             // 
@@ -142,6 +144,15 @@ namespace CsvToAvroApp
             this.cancelBtn.UseVisualStyleBackColor = true;
             this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(280, 62);
+            this.progressBar.MarqueeAnimationSpeed = 1000;
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(116, 23);
+            this.progressBar.TabIndex = 11;
+            this.progressBar.Visible = false;
+            // 
             // CsvToAvroForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -149,6 +160,7 @@ namespace CsvToAvroApp
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(694, 222);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.fileTypes);
             this.Controls.Add(this.label4);
@@ -160,6 +172,7 @@ namespace CsvToAvroApp
             this.Controls.Add(this.importBtn);
             this.Controls.Add(this.ConvertCsvToAvro);
             this.Name = "CsvToAvroForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CSV To Avro";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -180,6 +193,7 @@ namespace CsvToAvroApp
         private ComboBox fileTypes;
         private Button cancelBtn;
         private FolderBrowserDialog ExportlocationDialog;
+        private ProgressBar progressBar;
     }
 }
 

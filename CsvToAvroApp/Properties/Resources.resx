@@ -123,4 +123,13 @@
   <data name="Exit" xml:space="preserve">
     <value>Exit</value>
   </data>
+  <data name="Success" xml:space="preserve">
+    <value>Successfully converted to avro file at </value>
+  </data>
+  <data name="exported" xml:space="preserve">
+    <value>Exported to Avro</value>
+  </data>
+  <data name="error" xml:space="preserve">
+    <value>Error</value>
+  </data>
 </root>

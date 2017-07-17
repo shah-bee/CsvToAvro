@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using LogLevel = NLog.LogLevel;
 
 namespace CsvToAvro.Utility.Helper
 {
@@ -18,14 +22,22 @@ namespace CsvToAvro.Utility.Helper
             return (AvroStartDate - source).Days;
         }
 
-        public static long ConvertToLong(this string source)
+        public static long ConvertToLong(this DataRow source, string columnName, LogWrapper Logger)
         {
-            CultureInfo provider = CultureInfo.InvariantCulture;
+            try
+            {
+                CultureInfo provider = CultureInfo.InvariantCulture;
 
-            DateTime result = DateTime.ParseExact(source, new string[] { "dd.MM.yyyy", "dd-MM-yyyy", "dd-MM-yyyy" }, provider, DateTimeStyles.None);
+                DateTime result = DateTime.ParseExact(source[columnName].ToString(), new[] { "dd.MM.yyyy", "dd-MM-yyyy", "dd-MM-yyyy" },
+                    provider, DateTimeStyles.None);
 
-            return result.ConvertDateToLong();
-
+                return result.ConvertDateToLong();
+            }
+            catch (Exception exception)
+            {
+                Logger.Log(LogLevel.Error, exception, $"unable to cast Field : {columnName} " + source[columnName]);
+            }
+            return 0;
         }
     }
 }
