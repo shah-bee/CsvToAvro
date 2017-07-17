@@ -28,30 +28,22 @@ namespace CsvToAvroApp
         {
             ImportlocationDialog.ShowDialog();
             importLocation.Text = ImportlocationDialog.SelectedPath;
-
-
-
-
-
         }
 
         private void exportBtn_Click(object sender, EventArgs e)
         {
             ExportlocationDialog.ShowDialog();
             exportLocation.Text = ExportlocationDialog.SelectedPath;
-
-
-
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)
         {
-            CsvToAvroForm_FormClosing(sender, new FormClosingEventArgs(CloseReason.ApplicationExitCall, true));
-        }
+            var result = MessageBox.Show(Resources.Confirm, Resources.Exit, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-        private void CsvToAvroForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = MessageBox.Show(Resources.Confirm, Resources.Exit, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
+            if (result.Equals(DialogResult.Yes))
+            {
+                this.Close();
+            }
         }
 
         private void ConvertCsvToAvro_Click(object sender, EventArgs e)
@@ -66,13 +58,13 @@ namespace CsvToAvroApp
                 MessageBox.Show("Please select export location! ");
                 return;
             }
-
+            logger = new LogWrapper(exportLocation.Text);
 
             switch (fileTypes.SelectedItem.ToString().ToLowerInvariant())
             {
                 case "claim":
                     var claimImporter = new CsvToAvro.Utility.Claim.ClaimImporter(importLocation.Text, fileTypes.SelectedItem.ToString(),
-                        "EDF " + fileTypes.SelectedItem.ToString() + "*.csv", new LogWrapper(exportLocation.Text));
+                        "EDF " + fileTypes.SelectedItem + "*.csv", logger);
                     claimImporter.Import();
                     result = claimImporter.Claims;
                     break;
@@ -81,11 +73,11 @@ namespace CsvToAvroApp
 
             if (result.Any())
             {
-                var dialogResult = MessageBox.Show("Data imported successfully!", "Import result", MessageBoxButtons.OKCancel);
+                var dialogResult = MessageBox.Show(LogWrapper.ErrorCount.Equals(0) ? "Data imported successfully!" : $"Date imported with {LogWrapper.ErrorCount} : Erros", "Import result", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
                 if (dialogResult == DialogResult.OK)
                 {
-                    var result1 = new ExportToAvro(exportLocation.Text, result.Cast<Claim>(), fileTypes.SelectedItem.ToString());
+                    var result1 = new ExportToAvro(exportLocation.Text, result.Cast<Claim>(), fileTypes.SelectedItem.ToString(), logger);
                     if (ExportToAvro.IsImported)
                     {
                         MessageBox.Show("Successfully converted to avro file at " + exportLocation.Text);
@@ -98,8 +90,7 @@ namespace CsvToAvroApp
                 MessageBox.Show("Data not found to be imported!");
                 return;
             }
-
-
+            
         }
 
     }

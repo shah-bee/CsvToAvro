@@ -17,7 +17,7 @@ namespace CsvToAvro.Utility.Claim
     {
         public IEnumerable<Models.Claim> Claims;
 
-        private LogWrapper Logger;
+        private readonly LogWrapper Logger;
         public ClaimImporter(string path, string fileType, string fileName, LogWrapper logger) : base(path, fileType, fileName, logger)
         {
             this.Logger = logger;
@@ -65,11 +65,11 @@ namespace CsvToAvro.Utility.Claim
                             //ClaimReportDate = row["ClaimReportDate"].ToString().ConvertToLong(),
                             ClaimStatus = row["ClaimStatus"].ToString(),
                             //ClaimYearOfAccount = row["ClaimYearOfAccount"].ToString().ConvertToLong(),
-                           // CloseDate = row["CloseDate"].ToString().ConvertToLong(),
+                            // CloseDate = row["CloseDate"].ToString().ConvertToLong(),
                             CoverageNarrative = row["CoverageNarrative"].ToString(),
                             CoverholderWithClaimsAuthority = row["CoverholderWithClaimsAuthority"].ToString(),
-                         //   DateOfDeclinature = row["DateOfDeclinature"].ToString().ConvertToLong(),
-                          //  DateOfLoss = row["DateOfLoss"].ToString().ConvertToLong(),
+                            //DateOfDeclinature = row["DateOfDeclinature"].ToString().ConvertToLong(),
+                            //DateOfLoss = row["DateOfLoss"].ToString().ConvertToLong(),
                             GeographicalOriginOfTheClaim = row["GeographicalOriginOfTheClaim"].ToString(),
                             LineageReference = row["LineageReference"].ToString(),
                             LitigationCode = row["LitigationCode"].ToString(),
@@ -99,7 +99,8 @@ namespace CsvToAvro.Utility.Claim
                     }
                     catch (Exception ex)
                     {
-                        Logger.logger.Log(LogLevel.Error, ex, string.Format("While importing EDF claim  Claimnumber - {0} : ", row["KeyInternSchadenummer"]));
+                        Logger.Log(LogLevel.Error, ex,
+                            $"While importing EDF claim  Claimnumber - {row["KeyInternSchadenummer"]} : ");
                     }
                 }
             if (claims.Any())
@@ -131,8 +132,8 @@ namespace CsvToAvro.Utility.Claim
                     }
                     catch (Exception ex)
                     {
-                        Logger.logger.Log(LogLevel.Error, ex,
-                            string.Format("While importing EDF claim policy  - {0} : Claimnumber and PolicyCode : {1}", row["KeyInternSchadenummer"], row["PolicyCode"]));
+                        Logger.Log(LogLevel.Error, ex,
+                            $"While importing EDF claim policy  - {row["KeyInternSchadenummer"]} : Claimnumber and PolicyCode : {row["PolicyCode"]}");
                     }
                 }
 
@@ -164,8 +165,8 @@ namespace CsvToAvro.Utility.Claim
                     }
                     catch (Exception ex)
                     {
-                        Logger.logger.Log(LogLevel.Error, ex,
-    string.Format("While importing EDF claim section for - {0} : ClaimNumber and PolicyId : {1}", row["KeyInternSchadenummer"], row["KeyIdPolis"]));
+                        Logger.Log(LogLevel.Error, ex,
+                            $"While importing EDF claim section for - {row["KeyInternSchadenummer"]} : ClaimNumber and PolicyId : {row["KeyIdPolis"]}");
 
                     }
                 }
@@ -193,7 +194,7 @@ namespace CsvToAvro.Utility.Claim
                                 KeySchadeBoekingsNummer = row["KeySchadeBoekingsNummer"].ToString(),
                                 Payee = row["Payee"].ToString(),
                                 RateOfExchange = row["RateOfExchange"].ToString(),
-                              //  TransactionAuthorisationDate = row["TransactionAuthorisationDate"].ToString().ConvertToLong(),
+                                //  TransactionAuthorisationDate = row["TransactionAuthorisationDate"].ToString().ConvertToLong(),
                                 TransactionCurrencyCode = row["TransactionCurrencyCode"].ToString(),
                                 //TransactionDate = row["TransactionDate"].ToString().ConvertToLong(),
                                 TransactionReference = row["TransactionReference"].ToString(),
@@ -208,8 +209,7 @@ namespace CsvToAvro.Utility.Claim
                     }
                     catch (Exception ex)
                     {
-                        Logger.logger.Log(LogLevel.Error, ex,
-                            string.Format("While importing EDF claim transaction for - {0} : ClaimNumber and PolicyId : {1}", row["KeyInternSchadenummer"], row["KeyIdPolis"]), null);
+                        Logger.Log(LogLevel.Error, ex, $"While importing EDF claim transaction for - {row["KeyInternSchadenummer"]} : ClaimNumber and PolicyId : {row["KeyIdPolis"]}");
 
                     }
                 }
@@ -246,8 +246,7 @@ namespace CsvToAvro.Utility.Claim
                     }
                     catch (Exception ex)
                     {
-                        Logger.logger.Log(LogLevel.Error, ex,
-                           string.Format("While importing EDF claim transaction component for - {0} : ClaimNumber and PolicyId : {1}", row["KeyInternSchadenummer"], row["KeyIdPolis"]));
+                        Logger.Log(LogLevel.Error, ex, $"While importing EDF claim transaction component for - {row["KeyInternSchadenummer"]} : ClaimNumber and PolicyId : {row["KeyIdPolis"]}");
                     }
                 }
 
@@ -282,8 +281,8 @@ namespace CsvToAvro.Utility.Claim
                         }
                         catch (Exception exception)
                         {
-                            Logger.logger.Log(LogLevel.Error, exception,
-                           string.Format("While importing EDF Claim Claimant for - {0} : ClaimNumber", row["KeyInternSchadenummer"]));
+                            Logger.Log(LogLevel.Error, exception,
+                                $"While importing EDF Claim Claimant for - {row["KeyInternSchadenummer"]} : ClaimNumber");
 
                         }
                     }
